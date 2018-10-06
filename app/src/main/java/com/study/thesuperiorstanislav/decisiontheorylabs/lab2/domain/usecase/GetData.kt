@@ -8,17 +8,17 @@ class GetData(private val repository: DataSource): UseCase<GetData.RequestValues
 
     override fun executeUseCase(requestValues: RequestValues?) {
         if (requestValues != null) {
-//            repository.getPointsLab1(object : DataSource.LoadPointCallback {
-//                override fun onPointLoaded(pointList: List<Point>) {
-//                    val responseValue = ResponseValue(pointList)
-//                    useCaseCallback?.onSuccess(responseValue)
-//                }
-//
-//
-//                override fun onDataNotAvailable(error: Error) {
-//                    useCaseCallback?.onError(error)
-//                }
-//            })
+            repository.getPointsLab2(object : DataSource.LoadPointCallback {
+                override fun onPointLoaded(pointList: List<Point>) {
+                    val responseValue = ResponseValue(pointList)
+                    useCaseCallback?.onSuccess(responseValue)
+                }
+
+
+                override fun onDataNotAvailable(error: Error) {
+                    useCaseCallback?.onError(error)
+                }
+            })
         }
     }
 

@@ -9,16 +9,12 @@ class CacheDataFromFile(private val repository: DataSource): UseCase<CacheDataFr
     override fun executeUseCase(requestValues: RequestValues?) {
         if (requestValues != null) {
             val pointList = requestValues.pointList
-//            repository.cachePointsLab1(pointList,object : DataSource.SavePointCallback {
-//                override fun onSaved() {
-//                    val responseValue = ResponseValue()
-//                    useCaseCallback?.onSuccess(responseValue)
-//                }
-//
-//                override fun onError(error: Error) {
-//                    useCaseCallback?.onError(error)
-//                }
-//            })
+            repository.cachePointsLab2(pointList,object : DataSource.SavePointCallback {
+                override fun onSaved() {
+                    val responseValue = ResponseValue()
+                    useCaseCallback?.onSuccess(responseValue)
+                }
+            })
         }
     }
 

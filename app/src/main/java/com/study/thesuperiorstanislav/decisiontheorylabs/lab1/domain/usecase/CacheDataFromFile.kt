@@ -14,10 +14,6 @@ class CacheDataFromFile(private val repository: DataSource): UseCase<CacheDataFr
                     val responseValue = ResponseValue()
                     useCaseCallback?.onSuccess(responseValue)
                 }
-
-                override fun onError(error: Error) {
-                    useCaseCallback?.onError(error)
-                }
             })
         }
     }
