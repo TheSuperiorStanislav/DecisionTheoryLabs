@@ -47,7 +47,6 @@ class Lab1Fragment : Fragment(), Lab1Contract.View {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        retainInstance = true
         return inflater.inflate(R.layout.fragment_lab1, container, false)
     }
 
@@ -64,6 +63,13 @@ class Lab1Fragment : Fragment(), Lab1Contract.View {
         super.onResume()
         dialog?.show()
         presenter?.start()
+    }
+
+    override fun onDetach() {
+        dialog?.dismiss()
+        isActive = false
+        activity!!.fab.setOnClickListener {  }
+        super.onDetach()
     }
 
     override fun setPresenter(presenter: Lab1Contract.Presenter) {
@@ -96,7 +102,7 @@ class Lab1Fragment : Fragment(), Lab1Contract.View {
             graph_view.viewport.isXAxisBoundsManual = true
             graph_view.viewport.isYAxisBoundsManual = true
 
-            val minMax = GraphHelper.findMinsMax(pointListOriginal,pointListRestored)
+            val minMax = GraphHelper.findMinMax(pointListOriginal,pointListRestored)
 
             graph_view.viewport.setMinX(minMax[0])
             graph_view.viewport.setMaxX(minMax[1])

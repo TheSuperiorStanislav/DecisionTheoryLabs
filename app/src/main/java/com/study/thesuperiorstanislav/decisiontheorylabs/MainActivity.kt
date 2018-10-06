@@ -10,10 +10,14 @@ import android.view.View
 import com.study.thesuperiorstanislav.decisiontheorylabs.data.source.Repository
 import com.study.thesuperiorstanislav.decisiontheorylabs.lab1.Lab1Fragment
 import com.study.thesuperiorstanislav.decisiontheorylabs.lab1.Lab1Presenter
-import com.study.thesuperiorstanislav.decisiontheorylabs.lab1.domain.usecase.DoTheThing
-import com.study.thesuperiorstanislav.decisiontheorylabs.lab1.domain.usecase.GetData
-import com.study.thesuperiorstanislav.decisiontheorylabs.lab1.domain.usecase.CacheDataFromFile
+import com.study.thesuperiorstanislav.decisiontheorylabs.lab1.domain.usecase.DoTheThingLab1
+import com.study.thesuperiorstanislav.decisiontheorylabs.lab1.domain.usecase.GetDataLab1
+import com.study.thesuperiorstanislav.decisiontheorylabs.lab1.domain.usecase.CacheDataFromFileLab1
 import com.study.thesuperiorstanislav.decisiontheorylabs.lab2.Lab2Fragment
+import com.study.thesuperiorstanislav.decisiontheorylabs.lab2.Lab2Presenter
+import com.study.thesuperiorstanislav.decisiontheorylabs.lab2.domain.usecase.CacheDataFromFileLab2
+import com.study.thesuperiorstanislav.decisiontheorylabs.lab2.domain.usecase.DoTheThingLab2
+import com.study.thesuperiorstanislav.decisiontheorylabs.lab2.domain.usecase.GetDataLab2
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.content_main.*
@@ -35,6 +39,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         nav_view.setNavigationItemSelectedListener(this)
     }
 
+    override fun onResume() {
+        super.onResume()
+        showFragment(nav_view.checkedItem?.itemId)
+    }
+
     override fun onBackPressed() {
         if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
             drawer_layout.closeDrawer(GravityCompat.START)
@@ -48,14 +57,24 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         if (item.isChecked)
             return true
 
-        when (item.itemId) {
+        showFragment(item.itemId)
+
+        drawer_layout.closeDrawer(GravityCompat.START)
+        return true
+    }
+
+    private fun showFragment(id: Int?) {
+        if (id == null)
+            return
+
+        when (id) {
             R.id.nav_lab_1 -> {
                 val ft = supportFragmentManager.beginTransaction()
                 val fragment = Lab1Fragment()
                 fragment.setPresenter(Lab1Presenter(fragment,
-                        DoTheThing(),
-                        GetData(Repository),
-                        CacheDataFromFile(Repository)))
+                        DoTheThingLab1(),
+                        GetDataLab1(Repository),
+                        CacheDataFromFileLab1(Repository)))
                 ft.replace(R.id.content_frame, fragment)
                 if (!isFinishing)
                     ft.commitAllowingStateLoss()
@@ -64,10 +83,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_lab_2 -> {
                 val ft = supportFragmentManager.beginTransaction()
                 val fragment = Lab2Fragment()
-//                fragment.setPresenter(Lab1Presenter(fragment,
-//                        DoTheThing(),
-//                        GetData(Repository),
-//                        CacheDataFromFile(Repository)))
+                fragment.setPresenter(Lab2Presenter(fragment,
+                        DoTheThingLab2(),
+                        GetDataLab2(Repository),
+                        CacheDataFromFileLab2(Repository)))
                 ft.replace(R.id.content_frame, fragment)
                 if (!isFinishing)
                     ft.commitAllowingStateLoss()
@@ -80,8 +99,5 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
             }
         }
-
-        drawer_layout.closeDrawer(GravityCompat.START)
-        return true
     }
 }

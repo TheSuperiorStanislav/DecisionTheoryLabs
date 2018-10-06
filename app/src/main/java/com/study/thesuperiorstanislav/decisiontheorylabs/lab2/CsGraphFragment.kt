@@ -11,7 +11,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.jjoe64.graphview.series.DataPoint
 import com.jjoe64.graphview.series.LineGraphSeries
-import com.jjoe64.graphview.series.PointsGraphSeries
 
 import com.study.thesuperiorstanislav.decisiontheorylabs.R
 import com.study.thesuperiorstanislav.decisiontheorylabs.UseCase
@@ -23,13 +22,13 @@ import org.jetbrains.anko.onComplete
 import org.jetbrains.anko.uiThread
 
 
-class GraphFragment: Fragment(),GraphContract.View {
+class CsGraphFragment : Fragment(),CsGraphContract.View {
 
     override var isActive: Boolean = false
 
-    private var presenter: GraphContract.Presenter? = null
+    private var presenter: CsGraphContract.Presenter? = null
 
-    override fun setPresenter(presenter: GraphContract.Presenter) {
+    override fun setPresenter(presenter: CsGraphContract.Presenter) {
         this.presenter = presenter
     }
 
@@ -44,27 +43,21 @@ class GraphFragment: Fragment(),GraphContract.View {
     }
 
 
-    override fun drawGraph(pointListOriginal: List<Point>, pointListRestored: List<Point>) {
+    override fun drawGraph(pointListCs: List<Point>) {
         graph_view.title = ""
 
         doAsync {
-            val dataForGraphOriginal = PointsGraphSeries<DataPoint>(arrayOf<DataPoint>())
-            dataForGraphOriginal.color = ContextCompat.getColor(context!!,
-                    R.color.colorGraphOriginal)
-            dataForGraphOriginal.size = 12f
-            dataForGraphOriginal.shape = PointsGraphSeries.Shape.POINT
-
-            val dataForGraphRestored = LineGraphSeries<DataPoint>(arrayOf<DataPoint>())
-            dataForGraphRestored.color = ContextCompat.getColor(context!!,
+            val dataForGraphCs = LineGraphSeries<DataPoint>(arrayOf<DataPoint>())
+            dataForGraphCs.color = ContextCompat.getColor(context!!,
                     R.color.colorGraphRestored)
-            dataForGraphRestored.thickness = 10
+            dataForGraphCs.thickness = 10
 
             graph_view.viewport.isScalable = false
             graph_view.viewport.isScrollable = false
             graph_view.viewport.isXAxisBoundsManual = true
             graph_view.viewport.isYAxisBoundsManual = true
 
-            val minMax = GraphHelper.findMinMax(pointListOriginal, pointListRestored)
+            val minMax = GraphHelper.findMinMax(pointListCs)
 
             graph_view.viewport.setMinX(minMax[0])
             graph_view.viewport.setMaxX(minMax[1])
@@ -72,21 +65,19 @@ class GraphFragment: Fragment(),GraphContract.View {
             graph_view.viewport.setMinY(minMax[2])
             graph_view.viewport.setMaxY(minMax[3])
 
-            for (i in 0 until pointListOriginal.size) {
+            for (i in 0 until pointListCs.size) {
                 SystemClock.sleep(50)
-                val dataPointOriginal = DataPoint(pointListOriginal[i].x, pointListOriginal[i].y)
-                val dataPointRestored = DataPoint(pointListRestored[i].x, pointListRestored[i].y)
+                val dataPointCs = DataPoint(pointListCs[i].x, pointListCs[i].y)
 
                 uiThread {
                     if (it.isResumed) {
                         try {
-                            dataForGraphOriginal.appendData(dataPointOriginal, false, pointListOriginal.size)
-                            dataForGraphRestored.appendData(dataPointRestored, false, pointListRestored.size)
+                            dataForGraphCs.appendData(dataPointCs,
+                                    false, pointListCs.size)
                             graph_view.removeAllSeries()
-                            graph_view.addSeries(dataForGraphRestored)
-                            graph_view.addSeries(dataForGraphOriginal)
-                        }catch (e: Exception){
-                            Log.e("GraphView",e.localizedMessage)
+                            graph_view.addSeries(dataForGraphCs)
+                        } catch (e: Exception) {
+                            Log.e("GraphView", e.localizedMessage)
                         }
                     }
                 }

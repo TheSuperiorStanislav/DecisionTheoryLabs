@@ -1,14 +1,14 @@
-package com.study.thesuperiorstanislav.decisiontheorylabs.lab1.domain.usecase
+package com.study.thesuperiorstanislav.decisiontheorylabs.lab2.domain.usecase
 
 import com.study.thesuperiorstanislav.decisiontheorylabs.UseCase
 import com.study.thesuperiorstanislav.decisiontheorylabs.data.source.DataSource
 import com.study.thesuperiorstanislav.decisiontheorylabs.lab1.domain.model.Point
 
-class GetData(private val repository: DataSource): UseCase<GetData.RequestValues, GetData.ResponseValue>() {
+class GetDataLab2(private val repository: DataSource): UseCase<GetDataLab2.RequestValues, GetDataLab2.ResponseValue>() {
 
     override fun executeUseCase(requestValues: RequestValues?) {
         if (requestValues != null) {
-            repository.getPointsLab1(object : DataSource.LoadPointCallback {
+            repository.getPointsLab2(object : DataSource.LoadPointCallback {
                 override fun onPointLoaded(pointList: List<Point>) {
                     val responseValue = ResponseValue(pointList)
                     useCaseCallback?.onSuccess(responseValue)

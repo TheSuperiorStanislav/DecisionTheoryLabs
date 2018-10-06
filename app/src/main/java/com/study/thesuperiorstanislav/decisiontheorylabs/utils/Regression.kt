@@ -5,7 +5,7 @@ import com.study.thesuperiorstanislav.decisiontheorylabs.lab1.domain.model.Point
 
 object Regression {
 
-    private const val coreType: Int = 0
+    private const val coreType: Int = 1
 
     private var pointListOriginal: List<Point> = arrayListOf()
     private var pointListRestored: MutableList<Point> = mutableListOf()

@@ -2,16 +2,16 @@ package com.study.thesuperiorstanislav.decisiontheorylabs.lab1
 
 import com.study.thesuperiorstanislav.decisiontheorylabs.UseCase
 import com.study.thesuperiorstanislav.decisiontheorylabs.UseCaseHandler
-import com.study.thesuperiorstanislav.decisiontheorylabs.lab1.domain.usecase.DoTheThing
-import com.study.thesuperiorstanislav.decisiontheorylabs.lab1.domain.usecase.GetData
-import com.study.thesuperiorstanislav.decisiontheorylabs.lab1.domain.usecase.CacheDataFromFile
+import com.study.thesuperiorstanislav.decisiontheorylabs.lab1.domain.usecase.DoTheThingLab1
+import com.study.thesuperiorstanislav.decisiontheorylabs.lab1.domain.usecase.GetDataLab1
+import com.study.thesuperiorstanislav.decisiontheorylabs.lab1.domain.usecase.CacheDataFromFileLab1
 import com.study.thesuperiorstanislav.decisiontheorylabs.lab1.domain.model.Point
 
 
 class Lab1Presenter(val lab1View: Lab1Contract.View,
-                    private val doTheThing: DoTheThing,
-                    private val getData: GetData,
-                    private val cacheDataFromFile: CacheDataFromFile): Lab1Contract.Presenter {
+                    private val doTheThingLab1: DoTheThingLab1,
+                    private val getDataLab1: GetDataLab1,
+                    private val cacheDataFromFileLab1: CacheDataFromFileLab1): Lab1Contract.Presenter {
 
     override fun start() {
         lab1View.isActive = true
@@ -19,10 +19,10 @@ class Lab1Presenter(val lab1View: Lab1Contract.View,
     }
 
     override fun doTheThing(pointList: List<Point>) {
-        val requestValue = DoTheThing.RequestValues(pointList)
-        UseCaseHandler.execute(doTheThing, requestValue,
-                object : UseCase.UseCaseCallback<DoTheThing.ResponseValue> {
-                    override fun onSuccess(response: DoTheThing.ResponseValue) {
+        val requestValue = DoTheThingLab1.RequestValues(pointList)
+        UseCaseHandler.execute(doTheThingLab1, requestValue,
+                object : UseCase.UseCaseCallback<DoTheThingLab1.ResponseValue> {
+                    override fun onSuccess(response: DoTheThingLab1.ResponseValue) {
                         // The lab1View may not be able to handle UI updates anymore
                         if (!lab1View.isActive) {
                             return
@@ -46,10 +46,10 @@ class Lab1Presenter(val lab1View: Lab1Contract.View,
     }
 
     override fun getPoints() {
-        val requestValue = GetData.RequestValues()
-        UseCaseHandler.execute(getData, requestValue,
-                object : UseCase.UseCaseCallback<GetData.ResponseValue> {
-                    override fun onSuccess(response: GetData.ResponseValue) {
+        val requestValue = GetDataLab1.RequestValues()
+        UseCaseHandler.execute(getDataLab1, requestValue,
+                object : UseCase.UseCaseCallback<GetDataLab1.ResponseValue> {
+                    override fun onSuccess(response: GetDataLab1.ResponseValue) {
                         // The lab1View may not be able to handle UI updates anymore
                         if (!lab1View.isActive) {
                             return
@@ -72,10 +72,10 @@ class Lab1Presenter(val lab1View: Lab1Contract.View,
 
     override fun savePoint(pointList: List<Point>) {
 
-        val requestValue = CacheDataFromFile.RequestValues(pointList)
-        UseCaseHandler.execute(cacheDataFromFile, requestValue,
-                object : UseCase.UseCaseCallback<CacheDataFromFile.ResponseValue> {
-                    override fun onSuccess(response: CacheDataFromFile.ResponseValue) {
+        val requestValue = CacheDataFromFileLab1.RequestValues(pointList)
+        UseCaseHandler.execute(cacheDataFromFileLab1, requestValue,
+                object : UseCase.UseCaseCallback<CacheDataFromFileLab1.ResponseValue> {
+                    override fun onSuccess(response: CacheDataFromFileLab1.ResponseValue) {
                         // The lab1View may not be able to handle UI updates anymore
                         if (!lab1View.isActive) {
                             return

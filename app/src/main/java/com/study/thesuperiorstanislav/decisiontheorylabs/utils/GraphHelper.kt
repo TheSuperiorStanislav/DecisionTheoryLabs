@@ -3,7 +3,7 @@ package com.study.thesuperiorstanislav.decisiontheorylabs.utils
 import com.study.thesuperiorstanislav.decisiontheorylabs.lab1.domain.model.Point
 
 object GraphHelper {
-    fun findMinsMax(pointListOriginal: List<Point>, pointListRestored: List<Point>): Array<Double> {
+    fun findMinMax(pointListOriginal: List<Point>, pointListRestored: List<Point>): Array<Double> {
         var maxX = Double.MIN_VALUE
         var maxY = Double.MIN_VALUE
         var minX = Double.MAX_VALUE
@@ -36,6 +36,33 @@ object GraphHelper {
             }
             if (maxY < pointListRestored[i].y) {
                 maxY = pointListRestored[i].y
+            }
+        }
+
+        return arrayOf(minX, maxX, minY, maxY)
+    }
+
+    fun findMinMax(pointList: List<Point>): Array<Double> {
+        var maxX = Double.MIN_VALUE
+        var maxY = Double.MIN_VALUE
+        var minX = Double.MAX_VALUE
+        var minY = Double.MAX_VALUE
+
+        for (i in 0 until pointList.size) {
+            if (minX > pointList[i].x) {
+                minX = pointList[i].x
+            }
+
+            if (minY > pointList[i].y) {
+                minY = pointList[i].y
+            }
+
+            if (maxX < pointList[i].x) {
+                maxX = pointList[i].x
+            }
+
+            if (maxY < pointList[i].y) {
+                maxY = pointList[i].y
             }
         }
 
