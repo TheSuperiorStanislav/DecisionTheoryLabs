@@ -56,8 +56,8 @@ class Lab1Fragment : Fragment(), Lab1Contract.View {
         activity!!.fab.setOnClickListener {
             performFileSearch()
         }
-
         activity!!.fab.show()
+        createLoadingDialog()
     }
 
     override fun onResume() {

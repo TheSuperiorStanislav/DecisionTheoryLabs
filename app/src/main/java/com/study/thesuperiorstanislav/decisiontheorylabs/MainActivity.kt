@@ -13,6 +13,7 @@ import com.study.thesuperiorstanislav.decisiontheorylabs.lab1.Lab1Presenter
 import com.study.thesuperiorstanislav.decisiontheorylabs.lab1.domain.usecase.DoTheThing
 import com.study.thesuperiorstanislav.decisiontheorylabs.lab1.domain.usecase.GetData
 import com.study.thesuperiorstanislav.decisiontheorylabs.lab1.domain.usecase.CacheDataFromFile
+import com.study.thesuperiorstanislav.decisiontheorylabs.lab2.Lab2Fragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.content_main.*
@@ -61,7 +62,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 this.welcome_text.visibility = View.GONE
             }
             R.id.nav_lab_2 -> {
-
+                val ft = supportFragmentManager.beginTransaction()
+                val fragment = Lab2Fragment()
+//                fragment.setPresenter(Lab1Presenter(fragment,
+//                        DoTheThing(),
+//                        GetData(Repository),
+//                        CacheDataFromFile(Repository)))
+                ft.replace(R.id.content_frame, fragment)
+                if (!isFinishing)
+                    ft.commitAllowingStateLoss()
+                this.welcome_text.visibility = View.GONE
             }
             R.id.nav_lab_3 -> {
 
