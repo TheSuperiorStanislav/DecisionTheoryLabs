@@ -15,11 +15,14 @@ interface DataSource {
 
         fun onSaved()
 
-        fun onError(error:UseCase.Error)
     }
 
     fun getPointsLab1(callback: LoadPointCallback)
 
     fun cachePointsLab1(pointList: List<Point>, callback: SavePointCallback)
+
+    fun getPointsLab2(callback: LoadPointCallback)
+
+    fun cachePointsLab2(pointList: List<Point>, callback: SavePointCallback)
 
 }
