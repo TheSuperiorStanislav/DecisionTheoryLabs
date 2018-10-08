@@ -28,7 +28,7 @@ import android.os.SystemClock
 import android.util.Log
 import android.view.Window
 import com.jjoe64.graphview.series.PointsGraphSeries
-import com.study.thesuperiorstanislav.decisiontheorylabs.utils.FileReader
+import com.study.thesuperiorstanislav.decisiontheorylabs.utils.File.FileReader
 import com.study.thesuperiorstanislav.decisiontheorylabs.utils.GraphHelper
 import kotlinx.android.synthetic.main.app_bar_main.*
 import org.jetbrains.anko.onComplete

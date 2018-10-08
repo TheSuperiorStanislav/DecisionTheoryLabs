@@ -1,4 +1,4 @@
-package com.study.thesuperiorstanislav.decisiontheorylabs.utils
+package com.study.thesuperiorstanislav.decisiontheorylabs.utils.Math
 
 import com.study.thesuperiorstanislav.decisiontheorylabs.lab1.domain.model.Point
 
@@ -12,14 +12,14 @@ object Regression {
     private var pointListCs: MutableList<Point> = mutableListOf()
 
     fun doTheThing(pointListOriginal: List<Point>):Array<List<Point>>{
-        this.pointListOriginal = pointListOriginal
+        Regression.pointListOriginal = pointListOriginal
         pointListRestored.clear()
         pointListCs.clear()
 
         val cs = findOptimal()
         calculateDotsModel(cs)
         return arrayOf(
-                this.pointListOriginal,
+                Regression.pointListOriginal,
                 pointListRestored,
                 pointListCs)
     }

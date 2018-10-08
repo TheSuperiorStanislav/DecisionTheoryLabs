@@ -21,7 +21,7 @@ import com.study.thesuperiorstanislav.decisiontheorylabs.lab2.CsGraphFragment
 import com.study.thesuperiorstanislav.decisiontheorylabs.lab2.CsGraphPresenter
 import com.study.thesuperiorstanislav.decisiontheorylabs.lab2.adapter.GraphAdapter
 import com.study.thesuperiorstanislav.decisiontheorylabs.lab3.domain.model.PointMD
-import com.study.thesuperiorstanislav.decisiontheorylabs.utils.FileReader
+import com.study.thesuperiorstanislav.decisiontheorylabs.utils.File.FileReader
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.fragment_lab3.*
 import java.io.BufferedReader

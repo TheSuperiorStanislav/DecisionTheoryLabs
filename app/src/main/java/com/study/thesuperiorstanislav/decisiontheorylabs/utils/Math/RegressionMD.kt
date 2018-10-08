@@ -1,4 +1,4 @@
-package com.study.thesuperiorstanislav.decisiontheorylabs.utils
+package com.study.thesuperiorstanislav.decisiontheorylabs.utils.Math
 
 import com.study.thesuperiorstanislav.decisiontheorylabs.lab1.domain.model.Point
 import com.study.thesuperiorstanislav.decisiontheorylabs.lab3.domain.model.PointMD
@@ -12,7 +12,7 @@ object RegressionMD {
     private var pointListCs: MutableList<Point> = mutableListOf()
 
     fun doTheThing(pointListOriginal: List<PointMD>):Array<List<Any>>{
-        this.pointListOriginal = pointListOriginal
+        RegressionMD.pointListOriginal = pointListOriginal
         pointListRestored.clear()
         pointListCs.clear()
 
@@ -37,7 +37,7 @@ object RegressionMD {
             var temp3 = 1.0
             u.forEach { uI ->
                 pointMD.u.forEach {
-                    temp3 *=cores(calculateCore(cs, uI, it))
+                    temp3 *= cores(calculateCore(cs, uI, it))
                 }
             }
             temp1 += temp3
