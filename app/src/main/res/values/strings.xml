@@ -8,6 +8,9 @@
     <string name="no_data">¯\\_(ツ)_/¯ \n No data to work with</string>
     <string name="processing_data">Processing data</string>
     <string name="please_wait">Please wait....</string>
+    <string name="pick_lab_text">Pick Lab</string>
+    <string name="x_text">X : </string>
+    <string name="u_text">U : </string>
 
     <string name="lab_1">Lab 1</string>
     <string name="lab_2">Lab 2</string>
@@ -20,6 +23,6 @@
     <!--Navigation drawer text(auto gen)-->
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="pick_lab_text">Pick Lab</string>
+
 
 </resources>

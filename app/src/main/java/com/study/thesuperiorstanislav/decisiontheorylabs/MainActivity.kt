@@ -18,6 +18,11 @@ import com.study.thesuperiorstanislav.decisiontheorylabs.lab2.Lab2Presenter
 import com.study.thesuperiorstanislav.decisiontheorylabs.lab2.domain.usecase.CacheDataFromFileLab2
 import com.study.thesuperiorstanislav.decisiontheorylabs.lab2.domain.usecase.DoTheThingLab2
 import com.study.thesuperiorstanislav.decisiontheorylabs.lab2.domain.usecase.GetDataLab2
+import com.study.thesuperiorstanislav.decisiontheorylabs.lab3.Lab3Fragment
+import com.study.thesuperiorstanislav.decisiontheorylabs.lab3.Lab3Presenter
+import com.study.thesuperiorstanislav.decisiontheorylabs.lab3.domain.usecase.CacheDataFromFileLab3
+import com.study.thesuperiorstanislav.decisiontheorylabs.lab3.domain.usecase.DoTheThingLab3
+import com.study.thesuperiorstanislav.decisiontheorylabs.lab3.domain.usecase.GetDataLab3
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.content_main.*
@@ -93,7 +98,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 this.welcome_text.visibility = View.GONE
             }
             R.id.nav_lab_3 -> {
-
+                val ft = supportFragmentManager.beginTransaction()
+                val fragment = Lab3Fragment()
+                fragment.setPresenter(Lab3Presenter(fragment,
+                        DoTheThingLab3(),
+                        GetDataLab3(Repository),
+                        CacheDataFromFileLab3(Repository)))
+                ft.replace(R.id.content_frame, fragment)
+                if (!isFinishing)
+                    ft.commitAllowingStateLoss()
+                this.welcome_text.visibility = View.GONE
             }
             R.id.nav_lab_4 -> {
 

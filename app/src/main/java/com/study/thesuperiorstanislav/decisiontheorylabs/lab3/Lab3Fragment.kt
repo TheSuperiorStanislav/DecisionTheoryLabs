@@ -1,4 +1,5 @@
-package com.study.thesuperiorstanislav.decisiontheorylabs.lab2
+package com.study.thesuperiorstanislav.decisiontheorylabs.lab3
+
 
 import android.app.Activity
 import android.app.Dialog
@@ -16,31 +17,33 @@ import android.view.Window
 import com.study.thesuperiorstanislav.decisiontheorylabs.R
 import com.study.thesuperiorstanislav.decisiontheorylabs.UseCase
 import com.study.thesuperiorstanislav.decisiontheorylabs.lab1.domain.model.Point
+import com.study.thesuperiorstanislav.decisiontheorylabs.lab2.CsGraphFragment
+import com.study.thesuperiorstanislav.decisiontheorylabs.lab2.CsGraphPresenter
 import com.study.thesuperiorstanislav.decisiontheorylabs.lab2.adapter.GraphAdapter
+import com.study.thesuperiorstanislav.decisiontheorylabs.lab3.domain.model.PointMD
 import com.study.thesuperiorstanislav.decisiontheorylabs.utils.File.FileReader
 import kotlinx.android.synthetic.main.app_bar_main.*
-import kotlinx.android.synthetic.main.fragment_lab2.*
+import kotlinx.android.synthetic.main.fragment_lab3.*
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
-
-class Lab2Fragment : Fragment(),Lab2Contract.View {
-
+class Lab3Fragment : Fragment(),Lab3Contract.View {
     override var isActive: Boolean = false
 
-    private var presenter: Lab2Contract.Presenter? = null
-
-    private val readRequestCode = 42
+    private var presenter :Lab3Contract.Presenter? = null
 
     private var dialog: Dialog? = null
 
-    override fun setPresenter(presenter: Lab2Contract.Presenter) {
+    private val readRequestCode = 42
+
+    override fun setPresenter(presenter: Lab3Contract.Presenter) {
         this.presenter = presenter
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_lab2, container, false)
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_lab3, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -66,16 +69,16 @@ class Lab2Fragment : Fragment(),Lab2Contract.View {
         super.onDetach()
     }
 
-    override fun showGraphs(pointListOriginal: List<Point>, pointListRestored: List<Point>, pointListCs: List<Point>) {
+    override fun showData(pointListRestored: List<PointMD>, pointListCs: List<Point>) {
         dialog?.dismiss()
 
         no_data.visibility = View.GONE
 
         val adapter = GraphAdapter(childFragmentManager)
 
-        val fragmentGraph = GraphFragment()
-        fragmentGraph.setPresenter(GraphPresenter(fragmentGraph,pointListOriginal,pointListRestored))
-        adapter.addFragment(fragmentGraph, "Graph original and restored")
+        val fragmentGraph = GraphListFragment()
+        fragmentGraph.setPresenter(GraphListPresenter(fragmentGraph,pointListRestored))
+        adapter.addFragment(fragmentGraph, "GraphList")
 
         val fragmentGraphCs = CsGraphFragment()
         fragmentGraphCs.setPresenter(CsGraphPresenter(fragmentGraphCs,pointListCs))
@@ -107,7 +110,7 @@ class Lab2Fragment : Fragment(),Lab2Contract.View {
                 uri = resultData.data!!
                 val inputStream = activity?.contentResolver?.openInputStream(uri)
                 val reader = BufferedReader(InputStreamReader(inputStream))
-                val data = FileReader.readPointFromUri(reader)
+                val data = FileReader.readPointMDFromUri(reader)
                 if (data != null)
                     presenter?.savePoint(data)
                 else

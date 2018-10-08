@@ -1,4 +1,4 @@
-package com.study.thesuperiorstanislav.decisiontheorylabs.utils
+package com.study.thesuperiorstanislav.decisiontheorylabs.utils.Graph
 
 import com.study.thesuperiorstanislav.decisiontheorylabs.lab1.domain.model.Point
 

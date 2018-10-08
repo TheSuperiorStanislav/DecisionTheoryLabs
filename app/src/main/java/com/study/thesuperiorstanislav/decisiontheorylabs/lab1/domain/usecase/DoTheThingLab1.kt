@@ -2,7 +2,7 @@ package com.study.thesuperiorstanislav.decisiontheorylabs.lab1.domain.usecase
 
 import com.study.thesuperiorstanislav.decisiontheorylabs.UseCase
 import com.study.thesuperiorstanislav.decisiontheorylabs.lab1.domain.model.Point
-import com.study.thesuperiorstanislav.decisiontheorylabs.utils.Gauss
+import com.study.thesuperiorstanislav.decisiontheorylabs.utils.Math.Gauss
 
 class DoTheThingLab1(): UseCase<DoTheThingLab1.RequestValues, DoTheThingLab1.ResponseValue>() {
 
