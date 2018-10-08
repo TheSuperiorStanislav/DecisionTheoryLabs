@@ -11,7 +11,7 @@ import com.study.thesuperiorstanislav.decisiontheorylabs.lab1.domain.model.Point
 class Lab2Presenter(val lab2View: Lab2Contract.View,
                     private val doTheThingLab2: DoTheThingLab2,
                     private val getDataLab2: GetDataLab2,
-                    private val cacheDataFromFileLab1: CacheDataFromFileLab2): Lab2Contract.Presenter {
+                    private val cacheDataFromFileLab2: CacheDataFromFileLab2): Lab2Contract.Presenter {
 
     override fun start() {
         lab2View.isActive = true
@@ -73,7 +73,7 @@ class Lab2Presenter(val lab2View: Lab2Contract.View,
     override fun savePoint(pointList: List<Point>) {
 
         val requestValue = CacheDataFromFileLab2.RequestValues(pointList)
-        UseCaseHandler.execute(cacheDataFromFileLab1, requestValue,
+        UseCaseHandler.execute(cacheDataFromFileLab2, requestValue,
                 object : UseCase.UseCaseCallback<CacheDataFromFileLab2.ResponseValue> {
                     override fun onSuccess(response: CacheDataFromFileLab2.ResponseValue) {
                         // The lab2View may not be able to handle UI updates anymore

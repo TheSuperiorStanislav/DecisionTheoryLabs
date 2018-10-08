@@ -160,7 +160,7 @@ class Lab1Fragment : Fragment(), Lab1Contract.View {
                 uri = resultData.data!!
                 val inputStream = activity?.contentResolver?.openInputStream(uri)
                 val reader = BufferedReader(InputStreamReader(inputStream))
-                val data = FileReader.readTextFromUri(reader)
+                val data = FileReader.readPointFromUri(reader)
                 if (data != null)
                     presenter?.savePoint(data)
                 else

@@ -4,7 +4,7 @@ import com.study.thesuperiorstanislav.decisiontheorylabs.UseCase
 import com.study.thesuperiorstanislav.decisiontheorylabs.lab1.domain.model.Point
 import com.study.thesuperiorstanislav.decisiontheorylabs.utils.Regression
 
-class DoTheThingLab2(): UseCase<DoTheThingLab2.RequestValues, DoTheThingLab2.ResponseValue>() {
+class DoTheThingLab2: UseCase<DoTheThingLab2.RequestValues, DoTheThingLab2.ResponseValue>() {
 
     override fun executeUseCase(requestValues: RequestValues?) {
         if (requestValues != null) {
