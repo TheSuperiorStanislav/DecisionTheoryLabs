@@ -6,9 +6,9 @@ import com.study.thesuperiorstanislav.decisiontheorylabs.lab3.domain.model.Point
 
 object Repository: DataSource {
 
-    var cachedPointsListLab1: List<Point>? = null
-    var cachedPointsListLab2: List<Point>? = null
-    var cachedPointsListLab3: List<PointMD>? = null
+    private var cachedPointsListLab1: List<Point>? = null
+    private var cachedPointsListLab2: List<Point>? = null
+    private var cachedPointsListLab3: List<PointMD>? = null
 
     override fun getPointsLab1(callback: DataSource.LoadPointCallback) {
         if (cachedPointsListLab1 != null){
