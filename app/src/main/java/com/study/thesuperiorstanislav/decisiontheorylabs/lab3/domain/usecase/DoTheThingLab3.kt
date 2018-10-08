@@ -13,8 +13,8 @@ class DoTheThingLab3: UseCase<DoTheThingLab3.RequestValues, DoTheThingLab3.Respo
             try {
                 val pointListOriginal = requestValues.pointListOriginal
                 val calculatedData = RegressionMD.doTheThing(pointListOriginal)
-                val pointListRestored = calculatedData[1] as List<PointMD>
-                val pointListCs = calculatedData[2] as List<Point>
+                val pointListRestored = calculatedData[0] as List<PointMD>
+                val pointListCs = calculatedData[1] as List<Point>
                 val responseValue = ResponseValue(pointListRestored, pointListCs)
                 useCaseCallback?.onSuccess(responseValue)
             }catch (e:Exception){

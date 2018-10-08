@@ -19,7 +19,6 @@ object RegressionMD {
         val cs = findOptimal()
         calculateDotsModel(cs)
         return arrayOf(
-                this.pointListOriginal,
                 pointListRestored,
                 pointListCs)
     }
