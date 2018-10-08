@@ -16,7 +16,7 @@ import com.jjoe64.graphview.series.PointsGraphSeries
 import com.study.thesuperiorstanislav.decisiontheorylabs.R
 import com.study.thesuperiorstanislav.decisiontheorylabs.UseCase
 import com.study.thesuperiorstanislav.decisiontheorylabs.lab1.domain.model.Point
-import com.study.thesuperiorstanislav.decisiontheorylabs.utils.GraphHelper
+import com.study.thesuperiorstanislav.decisiontheorylabs.utils.Graph.GraphHelper
 import kotlinx.android.synthetic.main.fragment_graph.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.onComplete
