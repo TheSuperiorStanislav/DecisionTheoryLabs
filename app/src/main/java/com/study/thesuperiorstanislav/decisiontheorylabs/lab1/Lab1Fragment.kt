@@ -165,6 +165,7 @@ class Lab1Fragment : Fragment(), Lab1Contract.View {
                     presenter?.savePoint(data)
                 else
                     onError(UseCase.Error(UseCase.Error.UNKNOWN_ERROR,"Wrong file format"))
+                SystemClock.sleep(50)
             }
         }
     }

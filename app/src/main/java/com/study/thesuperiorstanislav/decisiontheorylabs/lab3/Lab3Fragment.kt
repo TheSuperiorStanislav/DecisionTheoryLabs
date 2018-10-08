@@ -6,6 +6,7 @@ import android.app.Dialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.SystemClock
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -71,9 +72,6 @@ class Lab3Fragment : Fragment(),Lab3Contract.View {
     override fun showData(pointListRestored: List<PointMD>, pointListCs: List<Point>) {
         dialog?.dismiss()
 
-        if (!isAdded)
-            return
-
         no_data.visibility = View.GONE
 
         val adapter = GraphAdapter(childFragmentManager)
@@ -117,6 +115,7 @@ class Lab3Fragment : Fragment(),Lab3Contract.View {
                     presenter?.savePoint(data)
                 else
                     onError(UseCase.Error(UseCase.Error.UNKNOWN_ERROR,"Wrong file format"))
+                SystemClock.sleep(50)
             }
         }
     }
