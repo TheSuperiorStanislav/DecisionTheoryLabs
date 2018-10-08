@@ -60,6 +60,14 @@ class Lab3Fragment : Fragment(),Lab3Contract.View {
         presenter?.start()
     }
 
+    override fun onDetach() {
+        dialog?.dismiss()
+        isActive = false
+        activity!!.tabs.visibility = View.GONE
+        activity!!.fab.setOnClickListener {  }
+        super.onDetach()
+    }
+
     override fun showData(pointListRestored: List<PointMD>, pointListCs: List<Point>) {
         dialog?.dismiss()
 
