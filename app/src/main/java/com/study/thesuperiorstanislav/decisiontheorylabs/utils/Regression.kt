@@ -35,8 +35,9 @@ object Regression {
         var temp1 = 0.0
         var temp2 = 0.0
         pointListOriginal.forEach {
-            temp1 += cores(calculateCore(cs, x, it.x))
-            temp2 += it.y * cores(calculateCore(cs, x, it.x))
+            val core = cores(calculateCore(cs, x, it.x))
+            temp1 += core
+            temp2 += it.y * core
         }
         return temp2 / temp1
     }
