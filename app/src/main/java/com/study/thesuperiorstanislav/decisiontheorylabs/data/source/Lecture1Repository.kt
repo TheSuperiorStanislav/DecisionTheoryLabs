@@ -20,13 +20,6 @@ object Lecture1Repository: Lecture1DataSource {
         callback.onDataLoaded(cacheFunction!!, cachePointList!!, cacheAlpha!!, cacheValue!!)
     }
 
-    override fun cacheData(function: String, alpha: Double, value: Double, callback: Lecture1DataSource.CacheDataCallback) {
-        cacheFunction = function
-        cacheAlpha = alpha
-        cacheValue =value
-        callback.onSaved()
-    }
-
     override fun cacheData(function: String, pointList: MutableList<Point>, alpha: Double, value: Double, callback: Lecture1DataSource.CacheDataCallback) {
         cacheFunction = function
         cacheAlpha = alpha

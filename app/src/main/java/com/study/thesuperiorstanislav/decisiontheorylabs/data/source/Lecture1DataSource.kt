@@ -19,8 +19,6 @@ interface Lecture1DataSource {
 
     fun getData(callback: LoadDataCallback)
 
-    fun cacheData(function: String, alpha : Double,value: Double, callback: CacheDataCallback)
-
     fun cacheData(function: String, pointList: MutableList<Point>, alpha : Double,value: Double, callback: CacheDataCallback)
 
 }
