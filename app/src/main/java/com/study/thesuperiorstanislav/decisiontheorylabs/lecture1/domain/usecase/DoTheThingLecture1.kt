@@ -1,6 +1,7 @@
 package com.study.thesuperiorstanislav.decisiontheorylabs.lecture1.domain.usecase
 
 import com.study.thesuperiorstanislav.decisiontheorylabs.UseCase
+import com.study.thesuperiorstanislav.decisiontheorylabs.utils.Math.Function
 import net.objecthunter.exp4j.ExpressionBuilder
 
 
@@ -14,9 +15,9 @@ class DoTheThingLecture1: UseCase<DoTheThingLecture1.RequestValues, DoTheThingLe
                 var alpha = requestValues.alpha
                 val value = requestValues.value
 
-                val fU = calculateFunc(u, function)
+                val fU = Function.calculateFunc(u, function)
                 val uNew = u + alpha * (value - fU)
-                val fUNew = calculateFunc(uNew, function)
+                val fUNew = Function.calculateFunc(uNew, function)
 
                 if (Math.abs(value - fU) < Math.abs(value - fUNew))
                     alpha = -alpha
@@ -27,14 +28,6 @@ class DoTheThingLecture1: UseCase<DoTheThingLecture1.RequestValues, DoTheThingLe
                 useCaseCallback?.onError(UseCase.Error(Error.UNKNOWN_ERROR, e.localizedMessage))
             }
         }
-    }
-
-    private fun calculateFunc(u: Double, function: String): Double {
-        val exp = ExpressionBuilder(function)
-                .variables("u")
-                .build()
-                .setVariable("u", u)
-        return exp.evaluate()
     }
 
     class RequestValues(val function: String,

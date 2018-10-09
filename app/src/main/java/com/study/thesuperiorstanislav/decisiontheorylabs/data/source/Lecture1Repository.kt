@@ -4,7 +4,6 @@ import com.study.thesuperiorstanislav.decisiontheorylabs.UseCase
 import com.study.thesuperiorstanislav.decisiontheorylabs.lab1.domain.model.Point
 
 object Lecture1Repository: Lecture1DataSource {
-
     var cacheFunction: String? = null
     var cacheAlpha: Double? = null
     var cachePointList: MutableList<Point>? = null
@@ -19,6 +18,15 @@ object Lecture1Repository: Lecture1DataSource {
 
         callback.onDataLoaded(cacheFunction!!, cachePointList!!, cacheAlpha!!, cacheValue!!)
     }
+
+    override fun changeAlpha(value: Double, callback: Lecture1DataSource.ChangeAlphaCallback) {
+        if (cacheAlpha != null) {
+            cacheAlpha = cacheAlpha!! + value
+            callback.onSaved()
+        } else
+            callback.onError(UseCase.Error(UseCase.Error.LOAD_ERROR, "Algorithm isn't running"))
+    }
+
 
     override fun cacheData(function: String, pointList: MutableList<Point>, alpha: Double, value: Double, callback: Lecture1DataSource.CacheDataCallback) {
         cacheFunction = function

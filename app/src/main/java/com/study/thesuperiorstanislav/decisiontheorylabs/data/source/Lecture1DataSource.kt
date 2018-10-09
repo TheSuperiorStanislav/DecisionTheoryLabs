@@ -17,7 +17,17 @@ interface Lecture1DataSource {
 
     }
 
+    interface ChangeAlphaCallback {
+
+        fun onSaved()
+
+        fun onError(error: UseCase.Error)
+
+    }
+
     fun getData(callback: LoadDataCallback)
+
+    fun changeAlpha(value: Double, callback: ChangeAlphaCallback)
 
     fun cacheData(function: String, pointList: MutableList<Point>, alpha : Double,value: Double, callback: CacheDataCallback)
 

@@ -4,7 +4,7 @@ import com.study.thesuperiorstanislav.decisiontheorylabs.UseCase
 import com.study.thesuperiorstanislav.decisiontheorylabs.data.source.Lecture1DataSource
 import com.study.thesuperiorstanislav.decisiontheorylabs.lab1.domain.model.Point
 
-class GetDataLecrture1 (private val lecture1Repository: Lecture1DataSource): UseCase<GetDataLecrture1.RequestValues, GetDataLecrture1.ResponseValue>() {
+class GetDataLecture1 (private val lecture1Repository: Lecture1DataSource): UseCase<GetDataLecture1.RequestValues, GetDataLecture1.ResponseValue>() {
 
     override fun executeUseCase(requestValues: RequestValues?) {
         if (requestValues != null) {
