@@ -26,6 +26,7 @@ import android.os.SystemClock
 import android.util.Log
 import android.view.Window
 import androidx.fragment.app.Fragment
+import com.google.android.material.snackbar.Snackbar
 import com.jjoe64.graphview.series.PointsGraphSeries
 import com.study.thesuperiorstanislav.decisiontheorylabs.utils.File.FileReader
 import com.study.thesuperiorstanislav.decisiontheorylabs.utils.Graph.GraphHelper
@@ -140,7 +141,7 @@ class Lab1Fragment : Fragment(), Lab1Contract.View {
 
     override fun onError(error: UseCase.Error) {
         dialog?.dismiss()
-        val snackBar = com.google.android.material.snackbar.Snackbar.make(main_layout, error.message!!, com.google.android.material.snackbar.Snackbar.LENGTH_SHORT)
+        val snackBar = Snackbar.make(main_layout, error.message!!, com.google.android.material.snackbar.Snackbar.LENGTH_SHORT)
         snackBar.setAction("¯\\(°_o)/¯") { _ ->  }
         snackBar.show()
     }
