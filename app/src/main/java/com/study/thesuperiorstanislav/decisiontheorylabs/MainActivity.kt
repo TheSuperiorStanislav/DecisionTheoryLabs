@@ -1,6 +1,7 @@
 package com.study.thesuperiorstanislav.decisiontheorylabs
 
 import android.os.Bundle
+import android.view.Menu
 import com.google.android.material.navigation.NavigationView
 import androidx.core.view.GravityCompat
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -23,6 +24,7 @@ import com.study.thesuperiorstanislav.decisiontheorylabs.lab3.Lab3Presenter
 import com.study.thesuperiorstanislav.decisiontheorylabs.lab3.domain.usecase.CacheDataFromFileLab3
 import com.study.thesuperiorstanislav.decisiontheorylabs.lab3.domain.usecase.DoTheThingLab3
 import com.study.thesuperiorstanislav.decisiontheorylabs.lab3.domain.usecase.GetDataLab3
+import com.study.thesuperiorstanislav.decisiontheorylabs.lecture1.Lecture1Fragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.content_main.*
@@ -111,6 +113,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             R.id.nav_lab_4 -> {
 
+            }
+            R.id.nav_lecture_1 -> {
+                val ft = supportFragmentManager.beginTransaction()
+                val fragment = Lecture1Fragment()
+//                fragment.setPresenter(Lab3Presenter(fragment,
+//                        DoTheThingLab3(),
+//                        GetDataLab3(Repository),
+//                        CacheDataFromFileLab3(Repository)))
+                ft.replace(R.id.content_frame, fragment)
+                if (!isFinishing)
+                    ft.commitAllowingStateLoss()
+                this.welcome_text.visibility = View.GONE
             }
         }
     }

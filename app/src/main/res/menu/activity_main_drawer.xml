@@ -17,5 +17,10 @@
             android:id="@+id/nav_lab_4"
             android:title="@string/lab_4" />
     </group>
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_lecture_1"
+            android:title="@string/lecture_1" />
+    </group>
 
 </menu>

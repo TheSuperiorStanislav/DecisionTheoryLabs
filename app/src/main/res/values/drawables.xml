@@ -1,3 +1,5 @@
 <resources>
     <item name="ic_menu_upload" type="drawable">@drawable/ic_file_upload_black_24dp</item>
+    <item name="ic_menu_play" type="drawable">@drawable/ic_play_arrow_black_24dp</item>
+    <item name="ic_menu_pause" type="drawable">@drawable/ic_pause_black_24dp</item>
 </resources>
