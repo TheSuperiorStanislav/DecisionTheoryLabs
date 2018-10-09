@@ -6,9 +6,7 @@ import android.app.Dialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v4.app.Fragment
-import android.support.v4.content.ContextCompat
+import androidx.core.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,6 +25,7 @@ import java.text.DecimalFormat
 import android.os.SystemClock
 import android.util.Log
 import android.view.Window
+import androidx.fragment.app.Fragment
 import com.jjoe64.graphview.series.PointsGraphSeries
 import com.study.thesuperiorstanislav.decisiontheorylabs.utils.File.FileReader
 import com.study.thesuperiorstanislav.decisiontheorylabs.utils.Graph.GraphHelper
@@ -141,7 +140,7 @@ class Lab1Fragment : Fragment(), Lab1Contract.View {
 
     override fun onError(error: UseCase.Error) {
         dialog?.dismiss()
-        val snackBar = Snackbar.make(main_layout, error.message!!, Snackbar.LENGTH_SHORT)
+        val snackBar = com.google.android.material.snackbar.Snackbar.make(main_layout, error.message!!, com.google.android.material.snackbar.Snackbar.LENGTH_SHORT)
         snackBar.setAction("¯\\(°_o)/¯") { _ ->  }
         snackBar.show()
     }

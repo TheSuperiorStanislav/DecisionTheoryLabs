@@ -1,6 +1,6 @@
 package com.study.thesuperiorstanislav.decisiontheorylabs.lab3.adapter
 
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -45,7 +45,7 @@ class GraphPointAdapter (private val items: List<PointMD>, private val itemLayou
         return items.size
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ViewHolder(itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
         var x_text: TextView = itemView.findViewById(R.id.x_text)
         var u_text: TextView = itemView.findViewById(R.id.u_text)
     }

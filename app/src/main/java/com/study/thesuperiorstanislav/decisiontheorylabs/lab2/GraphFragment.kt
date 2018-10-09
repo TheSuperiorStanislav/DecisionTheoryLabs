@@ -2,9 +2,9 @@ package com.study.thesuperiorstanislav.decisiontheorylabs.lab2
 
 import android.os.Bundle
 import android.os.SystemClock
-import android.support.design.widget.Snackbar
-import android.support.v4.app.Fragment
-import android.support.v4.content.ContextCompat
+import com.google.android.material.snackbar.Snackbar
+import androidx.fragment.app.Fragment
+import androidx.core.content.ContextCompat
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -104,7 +104,7 @@ class GraphFragment: Fragment(),GraphContract.View {
 
 
     override fun onError(error: UseCase.Error) {
-        val snackBar = Snackbar.make(main_layout, error.message!!, Snackbar.LENGTH_SHORT)
+        val snackBar = Snackbar.make(main_layout, error.message!!, com.google.android.material.snackbar.Snackbar.LENGTH_SHORT)
         snackBar.setAction("¯\\(°_o)/¯") { _ ->  }
         snackBar.show()
     }
