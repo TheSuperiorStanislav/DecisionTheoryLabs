@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 
 import com.study.thesuperiorstanislav.decisiontheorylabs.R
+import kotlinx.android.synthetic.main.dialog_lecture1.*
 import kotlinx.android.synthetic.main.fragment_lecture1.*
 
 
@@ -25,12 +26,15 @@ class Lecture1Fragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         bottom_app_bar.inflateMenu(R.menu.fragment_lecture1_menu)
-        bottom_app_bar.setOnMenuItemClickListener {
-            when (it.itemId) {
+        bottom_app_bar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
                 R.id.app_bar_edit -> {
                     dialog = Dialog(context!!)
                     dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
                     dialog?.setContentView(R.layout.dialog_lecture1)
+                    dialog?.toolbar?.setNavigationOnClickListener {
+                        dialog?.dismiss()
+                    }
                     dialog?.show()
                     true
                 }
