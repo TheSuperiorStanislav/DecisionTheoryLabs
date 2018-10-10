@@ -8,6 +8,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import android.view.MenuItem
 import android.view.View
+import com.study.thesuperiorstanislav.decisiontheorylabs.data.source.Lecture1Repository
 import com.study.thesuperiorstanislav.decisiontheorylabs.data.source.Repository
 import com.study.thesuperiorstanislav.decisiontheorylabs.lab1.Lab1Fragment
 import com.study.thesuperiorstanislav.decisiontheorylabs.lab1.Lab1Presenter
@@ -25,6 +26,11 @@ import com.study.thesuperiorstanislav.decisiontheorylabs.lab3.domain.usecase.Cac
 import com.study.thesuperiorstanislav.decisiontheorylabs.lab3.domain.usecase.DoTheThingLab3
 import com.study.thesuperiorstanislav.decisiontheorylabs.lab3.domain.usecase.GetDataLab3
 import com.study.thesuperiorstanislav.decisiontheorylabs.lecture1.Lecture1Fragment
+import com.study.thesuperiorstanislav.decisiontheorylabs.lecture1.Lecture1Presenter
+import com.study.thesuperiorstanislav.decisiontheorylabs.lecture1.domain.usecase.CacheDataLecture1
+import com.study.thesuperiorstanislav.decisiontheorylabs.lecture1.domain.usecase.ChangeAlphaLecture1
+import com.study.thesuperiorstanislav.decisiontheorylabs.lecture1.domain.usecase.DoTheThingLecture1
+import com.study.thesuperiorstanislav.decisiontheorylabs.lecture1.domain.usecase.GetDataLecture1
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.content_main.*
@@ -117,10 +123,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_lecture_1 -> {
                 val ft = supportFragmentManager.beginTransaction()
                 val fragment = Lecture1Fragment()
-//                fragment.setPresenter(Lab3Presenter(fragment,
-//                        DoTheThingLab3(),
-//                        GetDataLab3(Repository),
-//                        CacheDataFromFileLab3(Repository)))
+                fragment.setPresenter(Lecture1Presenter(fragment,
+                        GetDataLecture1(Lecture1Repository),
+                        DoTheThingLecture1(),
+                        CacheDataLecture1(Lecture1Repository),
+                        ChangeAlphaLecture1(Lecture1Repository)))
                 ft.replace(R.id.content_frame, fragment)
                 if (!isFinishing)
                     ft.commitAllowingStateLoss()

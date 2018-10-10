@@ -37,8 +37,8 @@ class Lecture1Presenter(private val lecture1View: Lecture1Contract.View,
                         if (!lecture1View.isActive) {
                             return
                         }
-                        if (isRunning)
-                            doTheThing(response.function,response.pointList,response.alpha,response.value)
+
+                        lecture1View.showData(response.function,response.pointList, response.value, response.alpha)
                     }
 
                     override fun onError(error: UseCase.Error) {
@@ -61,7 +61,7 @@ class Lecture1Presenter(private val lecture1View: Lecture1Contract.View,
         else {
             val pointList = mutableListOf<Point>()
             pointList.add(Point(0.0, Function.calculateFunc(0.0, function)))
-            cacheData(function, pointList, 1.0, value)
+            cacheData(function, pointList, value)
         }
     }
 
@@ -92,7 +92,7 @@ class Lecture1Presenter(private val lecture1View: Lecture1Contract.View,
                 })
     }
 
-    fun doTheThing(function: String, pointList: MutableList<Point>, alpha: Double, value: Double){
+    override fun doTheThing(function: String, pointList: MutableList<Point>, alpha: Double, value: Double){
         val requestValue = DoTheThingLecture1.RequestValues(function,
                 pointList.last().x,
                 alpha,
@@ -105,16 +105,15 @@ class Lecture1Presenter(private val lecture1View: Lecture1Contract.View,
                         if (!lecture1View.isActive) {
                             return
                         }
+
                         pointList.add(Point(response.uNew, response.fUNew))
 
-
-                        lecture1View.showData(pointList, value, response.fUNew, alpha)
-
-                        if (response.fUNew != value)
-                            cacheData(function, pointList, response.alpha, value)
+                        if (Math.abs(response.fUNew - value) > 0.01 && response.fUNew != Double.NaN
+                            && response.fUNew != Double.POSITIVE_INFINITY && response.fUNew != Double.NEGATIVE_INFINITY)
+                            cacheData(function, pointList, value)
                         else{
                             isRunning = false
-                            cacheData(function, pointList, response.alpha, value)
+                            cacheData(function, pointList, value)
                         }
 
                     }
@@ -133,9 +132,8 @@ class Lecture1Presenter(private val lecture1View: Lecture1Contract.View,
 
     private fun cacheData(function: String,
                           pointList: MutableList<Point>,
-                          alpha: Double,
                           value: Double){
-        val requestValue = CacheDataLecture1.RequestValues(function,pointList,alpha,value)
+        val requestValue = CacheDataLecture1.RequestValues(function,pointList,value)
         UseCaseHandler.execute(cacheDataLecture1, requestValue,
                 object : UseCase.UseCaseCallback<CacheDataLecture1.ResponseValue> {
                     override fun onSuccess(response: CacheDataLecture1.ResponseValue) {
@@ -144,8 +142,7 @@ class Lecture1Presenter(private val lecture1View: Lecture1Contract.View,
                             return
                         }
 
-                        if (isRunning)
-                            doTheThing(function,pointList,alpha,value)
+                        getData()
                     }
 
                     override fun onError(error: UseCase.Error) {

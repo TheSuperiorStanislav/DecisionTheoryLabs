@@ -10,9 +10,9 @@ interface Lecture1Contract {
 
         var isActive: Boolean
 
-        fun showData(pointList: List<Point>,
+        fun showData(function: String,
+                     pointList: List<Point>,
                      value: Double,
-                     uValue: Double,
                      alpha:Double)
 
         fun onError(error: UseCase.Error)
@@ -33,5 +33,6 @@ interface Lecture1Contract {
 
         fun changeAlpha(flag: Boolean)
 
+        fun doTheThing(function: String, pointList: MutableList<Point>, alpha: Double, value: Double)
     }
 }

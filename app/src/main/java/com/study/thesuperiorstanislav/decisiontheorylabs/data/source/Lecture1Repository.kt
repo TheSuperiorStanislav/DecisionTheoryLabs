@@ -15,8 +15,10 @@ object Lecture1Repository: Lecture1DataSource {
                 || cachePointList == null
                 || cacheValue == null)
             callback.onDataNotAvailable(UseCase.Error(UseCase.Error.LOAD_ERROR,"No Data"))
+        else{
+            callback.onDataLoaded(cacheFunction!!, cachePointList!!, cacheAlpha!!, cacheValue!!)
+        }
 
-        callback.onDataLoaded(cacheFunction!!, cachePointList!!, cacheAlpha!!, cacheValue!!)
     }
 
     override fun changeAlpha(value: Double, callback: Lecture1DataSource.ChangeAlphaCallback) {
@@ -28,9 +30,11 @@ object Lecture1Repository: Lecture1DataSource {
     }
 
 
-    override fun cacheData(function: String, pointList: MutableList<Point>, alpha: Double, value: Double, callback: Lecture1DataSource.CacheDataCallback) {
+    override fun cacheData(function: String, pointList: MutableList<Point>,value: Double, callback: Lecture1DataSource.CacheDataCallback) {
         cacheFunction = function
-        cacheAlpha = alpha
+        if (cacheAlpha == null){
+            cacheAlpha = 0.5
+        }
         cacheValue =value
         cachePointList = pointList
         callback.onSaved()

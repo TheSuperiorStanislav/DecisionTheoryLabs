@@ -69,6 +69,7 @@ class Lab1Fragment : Fragment(), Lab1Contract.View {
         dialog?.dismiss()
         isActive = false
         activity!!.fab.setOnClickListener {  }
+        activity!!.fab.hide()
         super.onDetach()
     }
 
@@ -82,7 +83,6 @@ class Lab1Fragment : Fragment(), Lab1Contract.View {
         graph_view.visibility = View.VISIBLE
 
         val df = DecimalFormat("#.##")
-        df.format(abc[0])
         graph_view.title = "${df.format(abc[0])} * x^2 + ${df.format(abc[1])} * x + ${df.format(abc[2])}"
 
         doAsync {

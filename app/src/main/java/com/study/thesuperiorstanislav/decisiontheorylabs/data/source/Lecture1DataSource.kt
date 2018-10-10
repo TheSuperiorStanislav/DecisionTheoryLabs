@@ -29,6 +29,6 @@ interface Lecture1DataSource {
 
     fun changeAlpha(value: Double, callback: ChangeAlphaCallback)
 
-    fun cacheData(function: String, pointList: MutableList<Point>, alpha : Double,value: Double, callback: CacheDataCallback)
+    fun cacheData(function: String, pointList: MutableList<Point>,value: Double, callback: CacheDataCallback)
 
 }

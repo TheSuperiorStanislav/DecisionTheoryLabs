@@ -10,12 +10,10 @@ class CacheDataLecture1 (private val lecture1Repository: Lecture1DataSource): Us
         if (requestValues != null) {
             val function = requestValues.function
             val pointList = requestValues.pointList
-            val alpha = requestValues.alpha
             val value = requestValues.value
 
             lecture1Repository.cacheData(function,
                     pointList,
-                    alpha,
                     value, object : Lecture1DataSource.CacheDataCallback {
                 override fun onSaved() {
                     val responseValue = ResponseValue()
@@ -28,7 +26,6 @@ class CacheDataLecture1 (private val lecture1Repository: Lecture1DataSource): Us
 
     class RequestValues(val function: String,
                         val pointList: MutableList<Point>,
-                        val alpha: Double,
                         val value: Double) : UseCase.RequestValues
 
     class ResponseValue : UseCase.ResponseValue

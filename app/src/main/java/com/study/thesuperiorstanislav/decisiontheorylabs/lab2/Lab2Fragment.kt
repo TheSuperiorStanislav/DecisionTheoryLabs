@@ -63,6 +63,7 @@ class Lab2Fragment : Fragment(),Lab2Contract.View {
         isActive = false
         activity!!.tabs.visibility = View.GONE
         activity!!.fab.setOnClickListener {  }
+        activity!!.fab.hide()
         super.onDetach()
     }
 

@@ -19,8 +19,8 @@ class DoTheThingLecture1: UseCase<DoTheThingLecture1.RequestValues, DoTheThingLe
                 val uNew = u + alpha * (value - fU)
                 val fUNew = Function.calculateFunc(uNew, function)
 
-                if (Math.abs(value - fU) < Math.abs(value - fUNew))
-                    alpha = -alpha
+//                if (Math.abs(value - fU) < Math.abs(value - fUNew))
+//                    alpha = -alpha
 
                 val responseValue = ResponseValue(alpha,uNew,fUNew)
                 useCaseCallback?.onSuccess(responseValue)
