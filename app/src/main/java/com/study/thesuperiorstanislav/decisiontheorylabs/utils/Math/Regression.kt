@@ -24,6 +24,33 @@ object Regression {
                 pointListCs)
     }
 
+    private fun findOptimal(): Double {
+        var csMin = 0.01
+        var wMin = java.lang.Double.MAX_VALUE
+        var cs = 0.01
+        val step = 0.01
+        for (i in 0..99) {
+            cs = Math.round(cs * 100000.0) / 100000.0
+            val tempW = calculateW(cs)
+            pointListCs.add(Point(cs, tempW))
+            if (tempW < wMin) {
+                csMin = cs
+                wMin = tempW
+            }
+            cs += step
+        }
+        return Math.round(csMin * 100000.0) / 100000.0
+    }
+
+    private fun calculateW(cs: Double): Double {
+        var w = 0.0
+        pointListOriginal.forEach {
+            val yCalculated = calculateRegression(cs, it.x)
+            w += Math.pow(it.y - yCalculated, 2.0)
+        }
+        return w
+    }
+
     private fun calculateDotsModel(cs: Double) {
         pointListOriginal.forEach {
             pointListRestored.add(Point(it.x, calculateRegression(cs, it.x)))
@@ -57,33 +84,6 @@ object Regression {
             }
         }
         return k
-    }
-
-    private fun findOptimal(): Double {
-        var csMin = 0.01
-        var wMin = java.lang.Double.MAX_VALUE
-        var cs = 0.01
-        val step = 0.01
-        for (i in 0..99) {
-            cs = Math.round(cs * 100000.0) / 100000.0
-            val tempW = calculateW(cs)
-            pointListCs.add(Point(cs, tempW))
-            if (tempW < wMin) {
-                csMin = cs
-                wMin = tempW
-            }
-            cs += step
-        }
-        return Math.round(csMin * 100000.0) / 100000.0
-    }
-
-    private fun calculateW(cs: Double): Double {
-        var w = 0.0
-        pointListOriginal.forEach {
-            val yCalculated = calculateRegression(cs, it.x)
-            w += Math.pow(it.y - yCalculated, 2.0)
-        }
-        return w
     }
 
 }
