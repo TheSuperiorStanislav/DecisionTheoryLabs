@@ -2,9 +2,9 @@ package com.study.thesuperiorstanislav.decisiontheorylabs.lab2
 
 import android.os.Bundle
 import android.os.SystemClock
-import android.support.design.widget.Snackbar
-import android.support.v4.app.Fragment
-import android.support.v4.content.ContextCompat
+import com.google.android.material.snackbar.Snackbar
+import androidx.fragment.app.Fragment
+import androidx.core.content.ContextCompat
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -43,7 +43,7 @@ class GraphFragment: Fragment(),GraphContract.View {
         presenter?.start()
     }
 
-
+    @Suppress("UNCHECKED_CAST")
     override fun drawGraph(pointListOriginal: List<Point>, pointListRestored: List<Point>) {
         graph_view.title = ""
 
@@ -59,18 +59,7 @@ class GraphFragment: Fragment(),GraphContract.View {
                     R.color.colorGraphRestored)
             dataForGraphRestored.thickness = 10
 
-            graph_view.viewport.isScalable = false
-            graph_view.viewport.isScrollable = false
-            graph_view.viewport.isXAxisBoundsManual = true
-            graph_view.viewport.isYAxisBoundsManual = true
-
             val minMax = GraphHelper.findMinMax(pointListOriginal, pointListRestored)
-
-            graph_view.viewport.setMinX(minMax[0])
-            graph_view.viewport.setMaxX(minMax[1])
-
-            graph_view.viewport.setMinY(minMax[2])
-            graph_view.viewport.setMaxY(minMax[3])
 
             for (i in 0 until pointListOriginal.size) {
                 SystemClock.sleep(50)
@@ -78,13 +67,27 @@ class GraphFragment: Fragment(),GraphContract.View {
                 val dataPointRestored = DataPoint(pointListRestored[i].x, pointListRestored[i].y)
 
                 uiThread {
+                    graph_view.viewport.isScalable = false
+                    graph_view.viewport.isScrollable = false
+                    graph_view.viewport.isXAxisBoundsManual = true
+                    graph_view.viewport.isYAxisBoundsManual = true
+
+                    graph_view.viewport.setMinX(minMax[0])
+                    graph_view.viewport.setMaxX(minMax[1])
+
+                    graph_view.viewport.setMinY(minMax[2])
+                    graph_view.viewport.setMaxY(minMax[3])
+
+                    graph_view.removeAllSeries()
+                    graph_view.addSeries(dataForGraphRestored)
+                    graph_view.addSeries(dataForGraphOriginal)
+
                     if (it.isResumed) {
                         try {
-                            dataForGraphOriginal.appendData(dataPointOriginal, false, pointListOriginal.size)
-                            dataForGraphRestored.appendData(dataPointRestored, false, pointListRestored.size)
-                            graph_view.removeAllSeries()
-                            graph_view.addSeries(dataForGraphRestored)
-                            graph_view.addSeries(dataForGraphOriginal)
+                            (graph_view.series[0] as LineGraphSeries<DataPoint>)
+                                    .appendData(dataPointRestored,false,pointListOriginal.size)
+                            (graph_view.series[1] as PointsGraphSeries<DataPoint>)
+                                    .appendData(dataPointOriginal,false,pointListOriginal.size)
                         }catch (e: Exception){
                             Log.e("GraphView",e.localizedMessage)
                         }
@@ -104,7 +107,7 @@ class GraphFragment: Fragment(),GraphContract.View {
 
 
     override fun onError(error: UseCase.Error) {
-        val snackBar = Snackbar.make(main_layout, error.message!!, Snackbar.LENGTH_SHORT)
+        val snackBar = Snackbar.make(main_layout, error.message!!, com.google.android.material.snackbar.Snackbar.LENGTH_SHORT)
         snackBar.setAction("¯\\(°_o)/¯") { _ ->  }
         snackBar.show()
     }

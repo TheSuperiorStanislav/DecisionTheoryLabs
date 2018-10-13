@@ -1,4 +1,4 @@
-package com.study.thesuperiorstanislav.decisiontheorylabs.utils.Math
+package com.study.thesuperiorstanislav.decisiontheorylabs.utils.math
 
 object Gauss {
     private fun calculateGauss(matrix: Array<DoubleArray>):Array<DoubleArray>{

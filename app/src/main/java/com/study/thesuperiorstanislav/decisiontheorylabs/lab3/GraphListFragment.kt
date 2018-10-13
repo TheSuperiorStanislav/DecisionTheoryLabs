@@ -2,9 +2,9 @@ package com.study.thesuperiorstanislav.decisiontheorylabs.lab3
 
 
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -45,13 +45,13 @@ class GraphListFragment : Fragment(),GraphListContact.View {
     }
 
     override fun setData(pointListRestored: List<PointMD>) {
-        recycler_view.layoutManager = LinearLayoutManager(context)
+        recycler_view.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(context)
         val adapterSubject = GraphPointAdapter(pointListRestored, R.layout.layout_graph_point)
         recycler_view.adapter = adapterSubject
     }
 
     override fun onError(error: UseCase.Error) {
-        val snackBar = Snackbar.make(main_layout, error.message!!, Snackbar.LENGTH_SHORT)
+        val snackBar = Snackbar.make(main_layout, error.message!!, com.google.android.material.snackbar.Snackbar.LENGTH_SHORT)
         snackBar.setAction("¯\\(°_o)/¯") { _ ->  }
         snackBar.show()
     }
