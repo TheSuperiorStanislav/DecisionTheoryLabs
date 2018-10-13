@@ -3,7 +3,7 @@ package com.study.thesuperiorstanislav.decisiontheorylabs.lab3.domain.usecase
 import com.study.thesuperiorstanislav.decisiontheorylabs.UseCase
 import com.study.thesuperiorstanislav.decisiontheorylabs.lab1.domain.model.Point
 import com.study.thesuperiorstanislav.decisiontheorylabs.lab3.domain.model.PointMD
-import com.study.thesuperiorstanislav.decisiontheorylabs.utils.Math.RegressionMD
+import com.study.thesuperiorstanislav.decisiontheorylabs.utils.math.RegressionMD
 
 class DoTheThingLab3: UseCase<DoTheThingLab3.RequestValues, DoTheThingLab3.ResponseValue>() {
 

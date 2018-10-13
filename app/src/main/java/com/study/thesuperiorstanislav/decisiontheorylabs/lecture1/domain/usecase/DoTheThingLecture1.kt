@@ -1,8 +1,7 @@
 package com.study.thesuperiorstanislav.decisiontheorylabs.lecture1.domain.usecase
 
 import com.study.thesuperiorstanislav.decisiontheorylabs.UseCase
-import com.study.thesuperiorstanislav.decisiontheorylabs.utils.Math.Function
-import net.objecthunter.exp4j.ExpressionBuilder
+import com.study.thesuperiorstanislav.decisiontheorylabs.utils.math.Function
 
 
 class DoTheThingLecture1: UseCase<DoTheThingLecture1.RequestValues, DoTheThingLecture1.ResponseValue>() {

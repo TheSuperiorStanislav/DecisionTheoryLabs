@@ -7,7 +7,7 @@ import com.study.thesuperiorstanislav.decisiontheorylabs.lecture1.domain.usecase
 import com.study.thesuperiorstanislav.decisiontheorylabs.lecture1.domain.usecase.ChangeAlphaLecture1
 import com.study.thesuperiorstanislav.decisiontheorylabs.lecture1.domain.usecase.DoTheThingLecture1
 import com.study.thesuperiorstanislav.decisiontheorylabs.lecture1.domain.usecase.GetDataLecture1
-import com.study.thesuperiorstanislav.decisiontheorylabs.utils.Math.Function
+import com.study.thesuperiorstanislav.decisiontheorylabs.utils.math.Function
 
 class Lecture1Presenter(private val lecture1View: Lecture1Contract.View,
                         private val getDataLecture1: GetDataLecture1,

@@ -1,4 +1,4 @@
-package com.study.thesuperiorstanislav.decisiontheorylabs.utils.Math
+package com.study.thesuperiorstanislav.decisiontheorylabs.utils.math
 
 import net.objecthunter.exp4j.ExpressionBuilder
 
