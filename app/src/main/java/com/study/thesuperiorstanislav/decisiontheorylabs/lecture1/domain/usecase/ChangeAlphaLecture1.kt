@@ -10,9 +10,9 @@ class ChangeAlphaLecture1 (private val lecture1Repository: Lecture1DataSource): 
             val flag = requestValues.flag
 
             val value = if (flag){
-                0.1
+                0.025
             }else{
-                -0.1
+                -0.025
             }
 
             lecture1Repository.changeAlpha(value, object : Lecture1DataSource.ChangeAlphaCallback {

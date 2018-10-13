@@ -53,6 +53,17 @@
         app:layout_constraintTop_toBottomOf="@+id/hint" />
 
     <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/alpha"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:hint="@string/alpha_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/function" />
+
+    <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/value"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -61,7 +72,7 @@
         android:hint="@string/desired_value_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/function" />
+        app:layout_constraintTop_toBottomOf="@+id/alpha" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/start_action"

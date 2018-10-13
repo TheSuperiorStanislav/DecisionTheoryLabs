@@ -3,6 +3,7 @@ package com.study.thesuperiorstanislav.decisiontheorylabs.lecture1
 import android.app.Dialog
 import android.os.Bundle
 import android.os.SystemClock
+import android.text.SpannableStringBuilder
 import android.view.*
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -26,15 +27,30 @@ import kotlin.Exception
 class Lecture1Fragment : Fragment(),Lecture1Contract.View {
     override var isActive: Boolean = false
 
-    private var isRunning: Boolean = false
-    private var isPaused: Boolean = false
+    private var isRunning: Boolean? = null
 
     private var dialog: Dialog? = null
+
+    private var function :String? = null
+    private var alpha :Double? = null
+    private var value :Double? = null
 
     private var presenter: Lecture1Contract.Presenter? = null
 
     override fun setPresenter(presenter: Lecture1Contract.Presenter) {
         this.presenter = presenter
+    }
+
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        if (savedInstanceState != null) {
+            isRunning = savedInstanceState.get("isRunning") as Boolean?
+
+            function = savedInstanceState.getString("function")
+            alpha = savedInstanceState.getDouble("alpha",0.0)
+            value = savedInstanceState.getDouble("value",0.0)
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -45,32 +61,25 @@ class Lecture1Fragment : Fragment(),Lecture1Contract.View {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val dataForGraphU = LineGraphSeries<DataPoint>()
+        dataForGraphU.color = ContextCompat.getColor(context!!,
+                R.color.colorGraphOriginal)
+        dataForGraphU.thickness = 13
+
+        val dataForGraphValue = LineGraphSeries<DataPoint>()
+        dataForGraphValue.color = ContextCompat.getColor(context!!,
+                R.color.colorGraphRestored)
+        dataForGraphValue.thickness = 10
+
+        graph_view.addSeries(dataForGraphU)
+        graph_view.addSeries(dataForGraphValue)
+
         bottom_app_bar.inflateMenu(R.menu.fragment_lecture1_menu)
         bottom_app_bar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.app_bar_edit -> {
-                    dialog = Dialog(context!!)
-                    dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
-                    dialog?.setContentView(R.layout.dialog_lecture1)
-
-                    dialog?.toolbar?.setNavigationOnClickListener {
-                        dialog?.dismiss()
-                    }
-
-                    dialog?.start_action?.setOnClickListener {
-                        try {
-                            val function =  dialog?.function?.text.toString()
-                            val value = dialog?.value?.text?.toString()?.toDouble()
-                            isRunning = true
-                            presenter?.startTheThing(function,value!!)
-                            graph_view.removeAllSeries()
-                            dialog?.dismiss()
-                        }catch (e:Exception){
-                            onError(UseCase.Error(UseCase.Error.UNKNOWN_ERROR,e.localizedMessage))
-                        }
-
-                    }
-                    dialog?.show()
+                    setUpDialog()
                     true
                 }
                 R.id.app_bar_inc -> {
@@ -87,26 +96,45 @@ class Lecture1Fragment : Fragment(),Lecture1Contract.View {
             }
         }
         bottom_fab.setOnClickListener {
-            if (!(!isPaused && !isRunning)) {
-                isRunning = !isRunning
-                isPaused = if (!isRunning) {
+            if (isRunning != null) {
+                isRunning = !isRunning!!
+                if (!isRunning!!) {
                     bottom_fab.setImageResource(R.drawable.ic_menu_pause)
-                    presenter?.setRunStats(true, isRunning)
+                    presenter?.setRunStats(isRunning!!)
                     presenter?.stopTheThing()
-                    true
                 } else {
                     bottom_fab.setImageResource(R.drawable.ic_menu_play)
-                    presenter?.setRunStats(false, isRunning)
+                    presenter?.setRunStats(isRunning!!)
                     presenter?.getData()
-                    false
                 }
             }
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        if (isRunning == null)
+            bottom_fab.setImageResource(R.drawable.ic_menu_play)
+        else if (!isRunning!!)
+            bottom_fab.setImageResource(R.drawable.ic_menu_pause)
+    }
+
     override fun onResume() {
         super.onResume()
+        if (isRunning != null)
+            presenter?.setRunStats(isRunning!!)
         presenter?.start()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        if (isRunning != null)
+            outState.putBoolean("isRunning", isRunning!!)
+        outState.putString("function", function)
+        if (alpha != null)
+            outState.putDouble("alpha", alpha!!)
+        if (value != null)
+            outState.putDouble("value", value!!)
     }
 
     @Suppress("UNCHECKED_CAST")
@@ -125,66 +153,105 @@ class Lecture1Fragment : Fragment(),Lecture1Contract.View {
                     dataPointsValue.add(0, DataPoint(index.toDouble(), value))
                     pointListValue.add(0, Point(index.toDouble(), value))
                     newPointListValue.add(0, point)
+                } else {
+                    return@forEachReversedWithIndex
                 }
             }
 
-            val lastIndex = pointList.size.toDouble()
-
-            val dataPointU = DataPoint(lastIndex - 1.0, fUNew)
-            val dataPointValue =  DataPoint(lastIndex - 1.0, value)
-
-            val dataForGraphU = LineGraphSeries<DataPoint>(dataPointsU.toTypedArray())
-            dataForGraphU.color = ContextCompat.getColor(context!!,
-                    R.color.colorGraphOriginal)
-            dataForGraphU.thickness = 13
-
-            val dataForGraphValue = LineGraphSeries<DataPoint>(dataPointsValue.toTypedArray())
-            dataForGraphValue.color = ContextCompat.getColor(context!!,
-                    R.color.colorGraphRestored)
-            dataForGraphValue.thickness = 10
-
-            SystemClock.sleep(75)
+            SystemClock.sleep(100)
             uiThread {
-                val df = DecimalFormat("#.#####")
-                graph_view.title = "uValue = ${df.format(fUNew)}, alpha = ${df.format(alpha)}"
+                if (it.isResumed) {
+                    val df = DecimalFormat("#.#####")
+                    graph_view.title = "u= ${df.format(pointList.last().x)} " +
+                            "uValue = ${df.format(fUNew)}, " +
+                            "alpha = ${df.format(alpha)}"
 
-                graph_view.viewport.isScrollable = true
-                graph_view.viewport.isXAxisBoundsManual = true
+                    graph_view.viewport.isScrollable = true
+                    graph_view.viewport.isXAxisBoundsManual = true
 
-                graph_view.viewport.setMinX(pointListValue.first().x)
-                graph_view.viewport.setMaxX(pointListValue.last().x)
+                    graph_view.viewport.setMinX(pointListValue.first().x)
+                    graph_view.viewport.setMaxX(pointListValue.last().x)
 
-                if (graph_view.series.size == 0) {
-                    graph_view.addSeries(dataForGraphU)
-                    graph_view.addSeries(dataForGraphValue)
-                }else{
-                    (graph_view.series[0] as LineGraphSeries<DataPoint>)
-                            .appendData(dataPointU,true,pointList.size)
-                    (graph_view.series[1] as LineGraphSeries<DataPoint>)
-                            .appendData(dataPointValue,true,pointList.size)
+                    (graph_view.series[0] as LineGraphSeries<DataPoint>).resetData(
+                            dataPointsU.toTypedArray())
+
+                    (graph_view.series[1] as LineGraphSeries<DataPoint>).resetData(
+                            dataPointsValue.toTypedArray())
                 }
 
             }
             onComplete {
-                if (isRunning
-                        && Math.abs(fUNew - value) > 0.0001
-                        && fUNew != Double.NaN
-                        && fUNew != Double.POSITIVE_INFINITY
-                        && fUNew != Double.NEGATIVE_INFINITY)
-                    presenter?.doTheThing(function, pointList.toMutableList(), alpha, value)
+                if (isRunning != null)
+                    if (isRunning!!
+                            && Math.abs(fUNew - value) > 0.00001
+                            && fUNew != Double.NaN
+                            && fUNew != Double.POSITIVE_INFINITY
+                            && fUNew != Double.NEGATIVE_INFINITY) {
+                        presenter?.doTheThing(function, pointList.toMutableList(), alpha, value)
+                    } else {
+                        presenter?.setRunStats(isRunning!!)
+                        if (isRunning!!) {
+                            isRunning = null
+                        }
+                    }
             }
         }
     }
 
     override fun onError(error: UseCase.Error) {
         val snackBar = Snackbar.make(main_layout, error.message!!, Snackbar.LENGTH_SHORT)
-        snackBar.setAction("¯\\(°_o)/¯") { _ ->  }
+        snackBar.setAction("¯\\(°_o)/¯") { _ -> }
         snackBar.show()
     }
 
     override fun onLoadingError(error: UseCase.Error) {
         val snackBar = Snackbar.make(main_layout, error.message!!, Snackbar.LENGTH_SHORT)
-        snackBar.setAction("¯\\(°_o)/¯") { _ ->  }
+        snackBar.setAction("¯\\(°_o)/¯") { _ -> }
         snackBar.show()
+    }
+
+    private fun setUpDialog(){
+        dialog = Dialog(context!!)
+        dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog?.setContentView(R.layout.dialog_lecture1)
+
+        dialog?.toolbar?.setNavigationOnClickListener {
+            dialog?.dismiss()
+        }
+
+        dialog?.setOnDismissListener {
+            if (isRunning != null) {
+                if (isRunning == false) {
+                    isRunning = true
+                    presenter?.setRunStats(true)
+                    presenter?.getData()
+                }
+            }
+        }
+
+        dialog?.start_action?.setOnClickListener {
+            try {
+                function = dialog?.function?.text.toString()
+                alpha = dialog?.alpha?.text?.toString()?.toDouble()
+                value = dialog?.value?.text?.toString()?.toDouble()
+                presenter?.startTheThing(function!!, alpha!!, value!!)
+                dialog?.dismiss()
+                isRunning = true
+            } catch (e: Exception) {
+                onError(UseCase.Error(UseCase.Error.UNKNOWN_ERROR, e.localizedMessage))
+            }
+        }
+
+        isRunning = false
+        presenter?.stopTheThing()
+        dialog?.show()
+
+
+        if (function != null)
+            dialog?.function?.text = SpannableStringBuilder(function)
+        if (alpha != null)
+            dialog?.alpha?.text = SpannableStringBuilder(alpha.toString())
+        if (value != null)
+            dialog?.value?.text = SpannableStringBuilder(value.toString())
     }
 }

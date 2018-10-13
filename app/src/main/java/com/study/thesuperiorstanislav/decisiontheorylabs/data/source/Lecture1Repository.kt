@@ -4,20 +4,19 @@ import com.study.thesuperiorstanislav.decisiontheorylabs.UseCase
 import com.study.thesuperiorstanislav.decisiontheorylabs.lab1.domain.model.Point
 
 object Lecture1Repository: Lecture1DataSource {
-    var cacheFunction: String? = null
-    var cacheAlpha: Double? = null
-    var cachePointList: MutableList<Point>? = null
-    var cacheValue: Double? = null
+    private var cacheFunction: String? = null
+    private var cacheAlpha: Double? = null
+    private var cachePointList: MutableList<Point>? = null
+    private var cacheValue: Double? = null
 
     override fun getData(callback: Lecture1DataSource.LoadDataCallback) {
         if (cacheFunction == null
                 || cacheAlpha == null
                 || cachePointList == null
                 || cacheValue == null)
-            callback.onDataNotAvailable(UseCase.Error(UseCase.Error.LOAD_ERROR,"No Data"))
-        else{
+            callback.onDataNotAvailable(UseCase.Error(UseCase.Error.LOAD_ERROR, "No Data"))
+        else
             callback.onDataLoaded(cacheFunction!!, cachePointList!!, cacheAlpha!!, cacheValue!!)
-        }
 
     }
 
@@ -30,12 +29,17 @@ object Lecture1Repository: Lecture1DataSource {
     }
 
 
-    override fun cacheData(function: String, pointList: MutableList<Point>,value: Double, callback: Lecture1DataSource.CacheDataCallback) {
+    override fun cacheData(function: String, pointList: MutableList<Point>, alpha: Double, value: Double, callback: Lecture1DataSource.CacheDataCallback) {
         cacheFunction = function
-        if (cacheAlpha == null){
-            cacheAlpha = 0.5
-        }
-        cacheValue =value
+        cacheAlpha = alpha
+        cacheValue = value
+        cachePointList = pointList
+        callback.onSaved()
+    }
+
+    override fun cacheData(function: String, pointList: MutableList<Point>, value: Double, callback: Lecture1DataSource.CacheDataCallback) {
+        cacheFunction = function
+        cacheValue = value
         cachePointList = pointList
         callback.onSaved()
     }

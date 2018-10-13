@@ -15,17 +15,15 @@ class Lecture1Presenter(private val lecture1View: Lecture1Contract.View,
                         private val cacheDataLecture1: CacheDataLecture1,
                         private val changeAlphaLecture1: ChangeAlphaLecture1):Lecture1Contract.Presenter {
 
-    private var isRunning = false
-    private var isPaused = false
+    private var isRunning :Boolean? = null
 
     override fun start() {
         lecture1View.isActive = true
         getData()
     }
 
-    override fun setRunStats(isPaused: Boolean, isRunning: Boolean) {
+    override fun setRunStats(isRunning: Boolean) {
         this.isRunning = isRunning
-        this.isPaused = isPaused
     }
 
     override fun getData() {
@@ -52,22 +50,21 @@ class Lecture1Presenter(private val lecture1View: Lecture1Contract.View,
                 })
     }
 
-    override fun startTheThing(function: String, value: Double) {
-        isRunning = true
-        if (isPaused) {
-            isPaused = false
-            getData()
-        }
-        else {
+    override fun startTheThing(function: String, alpha: Double, value: Double) {
+        if (isRunning != null) {
+            isRunning = true
             val pointList = mutableListOf<Point>()
             pointList.add(Point(0.0, Function.calculateFunc(0.0, function)))
-            cacheData(function, pointList, value)
+            cacheData(function, pointList, alpha, value)
+        }
+        else {
+            isRunning = true
+            getData()
         }
     }
 
     override fun stopTheThing() {
         isRunning = false
-        isPaused = true
     }
 
     override fun changeAlpha(flag: Boolean) {
@@ -108,13 +105,7 @@ class Lecture1Presenter(private val lecture1View: Lecture1Contract.View,
 
                         pointList.add(Point(response.uNew, response.fUNew))
 
-                        if (Math.abs(response.fUNew - value) > 0.01 && response.fUNew != Double.NaN
-                            && response.fUNew != Double.POSITIVE_INFINITY && response.fUNew != Double.NEGATIVE_INFINITY)
-                            cacheData(function, pointList, value)
-                        else{
-                            isRunning = false
-                            cacheData(function, pointList, value)
-                        }
+                        cacheData(function, pointList, value)
 
                     }
 
@@ -133,7 +124,34 @@ class Lecture1Presenter(private val lecture1View: Lecture1Contract.View,
     private fun cacheData(function: String,
                           pointList: MutableList<Point>,
                           value: Double){
-        val requestValue = CacheDataLecture1.RequestValues(function,pointList,value)
+        val requestValue = CacheDataLecture1.RequestValues(function,pointList,null,value)
+        UseCaseHandler.execute(cacheDataLecture1, requestValue,
+                object : UseCase.UseCaseCallback<CacheDataLecture1.ResponseValue> {
+                    override fun onSuccess(response: CacheDataLecture1.ResponseValue) {
+                        // The lecture1View may not be able to handle UI updates anymore
+                        if (!lecture1View.isActive) {
+                            return
+                        }
+
+                        getData()
+                    }
+
+                    override fun onError(error: UseCase.Error) {
+                        // The lecture1View may not be able to handle UI updates anymore
+                        if (!lecture1View.isActive) {
+                            return
+                        }
+
+                        lecture1View.onError(error)
+                    }
+                })
+    }
+
+    private fun cacheData(function: String,
+                          pointList: MutableList<Point>,
+                          alpha: Double,
+                          value: Double){
+        val requestValue = CacheDataLecture1.RequestValues(function,pointList,alpha,value)
         UseCaseHandler.execute(cacheDataLecture1, requestValue,
                 object : UseCase.UseCaseCallback<CacheDataLecture1.ResponseValue> {
                     override fun onSuccess(response: CacheDataLecture1.ResponseValue) {

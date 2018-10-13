@@ -13,7 +13,7 @@ interface Lecture1Contract {
         fun showData(function: String,
                      pointList: List<Point>,
                      value: Double,
-                     alpha:Double)
+                     alpha: Double)
 
         fun onError(error: UseCase.Error)
 
@@ -25,9 +25,9 @@ interface Lecture1Contract {
 
         fun getData()
 
-        fun setRunStats(isPaused:Boolean,isRunning: Boolean)
+        fun setRunStats(isRunning: Boolean)
 
-        fun startTheThing(function: String,value: Double)
+        fun startTheThing(function: String, alpha: Double, value: Double)
 
         fun stopTheThing()
 

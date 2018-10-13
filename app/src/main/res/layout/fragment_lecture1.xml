@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_layout"
+    android:tag="lecture1"
     tools:context=".lecture1.Lecture1Fragment">
 
 
