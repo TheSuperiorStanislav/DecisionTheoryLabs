@@ -2,7 +2,7 @@ package com.study.thesuperiorstanislav.decisiontheorylabs.lab2.domain.usecase
 
 import com.study.thesuperiorstanislav.decisiontheorylabs.UseCase
 import com.study.thesuperiorstanislav.decisiontheorylabs.lab1.domain.model.Point
-import com.study.thesuperiorstanislav.decisiontheorylabs.utils.Math.Regression
+import com.study.thesuperiorstanislav.decisiontheorylabs.utils.math.Regression
 
 class DoTheThingLab2: UseCase<DoTheThingLab2.RequestValues, DoTheThingLab2.ResponseValue>() {
 

@@ -16,6 +16,17 @@
     <string name="lab_2">Lab 2</string>
     <string name="lab_3">Lab 3</string>
     <string name="lab_4">Lab 4</string>
+    <string name="lecture_1">Lecture 1</string>
+
+    <string name="increase_text">Increase</string>
+    <string name="edit_text">Edit</string>
+    <string name="decrease_text">Decrease</string>
+    <string name="function_text">Function</string>
+    <string name="desired_value_text">Desired value</string>
+    <string name="alpha_text">Alpha</string>
+    <string name="fill_the_form_and_press_start_text">Fill the form and press start.</string>
+    <string name="cancel_text">Cancel</string>
+    <string name="start_text">Start</string>
 
     <!--Fragment(auto gen)-->
     <string name="hello_blank_fragment">Hello blank fragment</string>

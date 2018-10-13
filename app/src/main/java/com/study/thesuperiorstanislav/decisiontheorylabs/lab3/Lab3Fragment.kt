@@ -66,6 +66,7 @@ class Lab3Fragment : Fragment(),Lab3Contract.View {
         isActive = false
         activity!!.tabs.visibility = View.GONE
         activity!!.fab.setOnClickListener {  }
+        activity!!.fab.hide()
         super.onDetach()
     }
 
@@ -92,7 +93,7 @@ class Lab3Fragment : Fragment(),Lab3Contract.View {
 
     override fun onError(error: UseCase.Error) {
         dialog?.dismiss()
-        val snackBar = Snackbar.make(main_layout, error.message!!, com.google.android.material.snackbar.Snackbar.LENGTH_SHORT)
+        val snackBar = Snackbar.make(main_layout, error.message!!, Snackbar.LENGTH_SHORT)
         snackBar.setAction("¯\\(°_o)/¯") { _ ->  }
         snackBar.show()
     }
