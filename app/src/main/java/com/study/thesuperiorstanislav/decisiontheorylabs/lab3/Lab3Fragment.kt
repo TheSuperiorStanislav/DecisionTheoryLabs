@@ -80,10 +80,10 @@ class Lab3Fragment : Fragment(),Lab3Contract.View {
         val fragmentGraph = GraphListFragment()
         fragmentGraph.setPresenter(GraphListPresenter(fragmentGraph,pointListRestored))
         adapter.addFragment(fragmentGraph, "GraphList")
-
-        val fragmentGraphCs = CsGraphFragment()
-        fragmentGraphCs.setPresenter(CsGraphPresenter(fragmentGraphCs,pointListCs))
-        adapter.addFragment(fragmentGraphCs, "Cs and W")
+//
+//        val fragmentGraphCs = CsGraphFragment()
+//        fragmentGraphCs.setPresenter(CsGraphPresenter(fragmentGraphCs,pointListCs))
+//        adapter.addFragment(fragmentGraphCs, "Cs and W")
 
         viewpager.adapter = adapter
 
