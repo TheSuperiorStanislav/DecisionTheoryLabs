@@ -19,6 +19,8 @@ import com.study.thesuperiorstanislav.decisiontheorylabs.UseCase
 import com.study.thesuperiorstanislav.decisiontheorylabs.lab1.domain.model.Point
 import com.study.thesuperiorstanislav.decisiontheorylabs.lab2.CsGraphFragment
 import com.study.thesuperiorstanislav.decisiontheorylabs.lab2.CsGraphPresenter
+import com.study.thesuperiorstanislav.decisiontheorylabs.lab2.GraphFragment
+import com.study.thesuperiorstanislav.decisiontheorylabs.lab2.GraphPresenter
 import com.study.thesuperiorstanislav.decisiontheorylabs.lab2.adapter.GraphAdapter
 import com.study.thesuperiorstanislav.decisiontheorylabs.lab3.domain.model.PointMD
 import com.study.thesuperiorstanislav.decisiontheorylabs.utils.File.FileReader
@@ -70,25 +72,23 @@ class Lab3Fragment : Fragment(),Lab3Contract.View {
         super.onDetach()
     }
 
-    override fun showData(pointListRestored: List<PointMD>, pointListCs: List<Point>) {
+    override fun showData(pointListOriginal: List<Point>, pointListRestored: List<Point>, pointListCs: Array<Double>) {
         dialog?.dismiss()
 
         no_data.visibility = View.GONE
 
         val adapter = GraphAdapter(childFragmentManager)
 
-        val fragmentGraph = GraphListFragment()
-        fragmentGraph.setPresenter(GraphListPresenter(fragmentGraph,pointListRestored))
+        val fragmentGraph = GraphFragment()
+        fragmentGraph.setPresenter(GraphPresenter(fragmentGraph,pointListOriginal,pointListRestored))
         adapter.addFragment(fragmentGraph, "GraphList")
-
-        val fragmentGraphCs = CsGraphFragment()
-        fragmentGraphCs.setPresenter(CsGraphPresenter(fragmentGraphCs,pointListCs))
-        adapter.addFragment(fragmentGraphCs, "Cs and W")
+//        val fragmentGraphCs = CsGraphFragment()
+//        fragmentGraphCs.setPresenter(CsGraphPresenter(fragmentGraphCs,pointListCs))
+//        adapter.addFragment(fragmentGraphCs, "Cs and W")
 
         viewpager.adapter = adapter
 
         activity!!.tabs.setupWithViewPager(viewpager)
-        activity!!.tabs.visibility = View.VISIBLE
     }
 
     override fun onError(error: UseCase.Error) {

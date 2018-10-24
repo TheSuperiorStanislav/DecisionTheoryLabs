@@ -52,8 +52,8 @@ class Lab3Presenter (val lab3View: Lab3Contract.View,
                             return
                         }
 
-                        lab3View.showData(response.pointListRestored,
-                                response.pointListCs)
+                        lab3View.showData(response.pointListOriginal,response.pointListRestored,
+                                response.cs)
                     }
 
                     override fun onError(error: UseCase.Error) {

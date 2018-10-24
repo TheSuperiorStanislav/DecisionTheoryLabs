@@ -11,8 +11,8 @@ interface Lab3Contract {
 
         var isActive: Boolean
 
-        fun showData(pointListRestored: List<PointMD>,
-                       pointListCs: List<Point>)
+        fun showData(pointListOriginal: List<Point>,pointListRestored: List<Point>,
+                       pointListCs: Array<Double>)
 
         fun onError(error: UseCase.Error)
 
