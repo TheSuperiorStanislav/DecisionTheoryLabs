@@ -64,7 +64,7 @@ object RegressionMD {
     private fun findOptimal(): Array<Double> {
         val n = pointListOriginal.first().u.size
 
-        val cs = Array(n) { _ -> 2.0 }
+        val cs = Array(n) { _ -> 3.0 }
         val csNew = Array(n) { _ -> 0.0 }
         val grad = Array(n) { _ -> 0.0 }
         val dirs = Array(n) { indexRow ->
@@ -84,7 +84,7 @@ object RegressionMD {
         var isStep9: Boolean
 
         var step = 0
-        val limit = n * 4
+        val limit = n * 2
 
         val e1 = 0.2
         val e2 = 0.2
@@ -124,14 +124,14 @@ object RegressionMD {
                                     else {
                                         k++
                                         csNew.forEachIndexed { index, csI ->
-                                            cs[index] = csI
+                                            cs[index] = csI * 1.0
                                         }
                                         isPrevOk = true
                                     }
                                 } else {
                                     k++
                                     csNew.forEachIndexed { index, csI ->
-                                        cs[index] = csI
+                                        cs[index] = csI * 1.0
                                     }
                                 }
                             } else {
@@ -146,7 +146,7 @@ object RegressionMD {
                 }while (k < n)
                 step++
                 csNew.forEachIndexed { index, csI ->
-                    cs[index] = csI
+                    cs[index] = csI * 1.0
                 }
             }
 
