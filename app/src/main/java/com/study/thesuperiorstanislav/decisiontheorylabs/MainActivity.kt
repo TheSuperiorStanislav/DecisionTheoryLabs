@@ -61,15 +61,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onResume() {
         super.onResume()
-        if (savedFragment != null)
-            showFragment(savedFragment!!,nav_view.checkedItem?.itemId)
-        else
+        if (savedFragment != null) {
+            if (savedFragment!!.tag == "lecture1")
+                showFragment(savedFragment!!, nav_view.checkedItem?.itemId)
+        } else
             showFragment(nav_view.checkedItem?.itemId)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        if (supportFragmentManager.fragments.isNotEmpty())
+        if (supportFragmentManager.fragments.isNotEmpty() && supportFragmentManager.fragments.first().tag == "lecture1")
             supportFragmentManager.putFragment(outState, "SavedFragment",
                     supportFragmentManager.fragments.first())
     }

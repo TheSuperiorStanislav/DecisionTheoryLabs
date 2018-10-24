@@ -11,12 +11,21 @@ class DoTheThingLab3: UseCase<DoTheThingLab3.RequestValues, DoTheThingLab3.Respo
     override fun executeUseCase(requestValues: RequestValues?) {
         if (requestValues != null) {
             //try {
-                val pointListOriginal = requestValues.pointListOriginal
-                val calculatedData = RegressionMD.doTheThing(pointListOriginal)
-                val pointListRestored = calculatedData[0] as List<PointMD>
-                val pointListCs = calculatedData[1] as List<Point>
-                val responseValue = ResponseValue(pointListRestored, pointListCs)
-                useCaseCallback?.onSuccess(responseValue)
+            val pointListOriginal = requestValues.pointListOriginal
+
+            val calculatedData = RegressionMD.doTheThing(pointListOriginal)
+            val pointListRestored = calculatedData[0] as List<PointMD>
+            val cs = calculatedData[1] as Array<Double>
+
+            val pointListOriginalToReturn = mutableListOf<Point>()
+            val pointListRestoredToReturn = mutableListOf<Point>()
+            pointListOriginal.forEachIndexed { index, pointMD ->
+                pointListOriginalToReturn.add(index, Point(pointMD.u.first(),pointMD.x))
+                pointListRestoredToReturn.add(index,
+                        Point(pointListRestored[index].u.first(),pointListRestored[index].x))
+            }
+            val responseValue = ResponseValue(pointListOriginalToReturn,pointListRestoredToReturn, cs)
+            useCaseCallback?.onSuccess(responseValue)
 //            }catch (e:Exception){
 //                useCaseCallback?.onError(UseCase.Error(Error.UNKNOWN_ERROR, e.localizedMessage))
 //            }
@@ -25,6 +34,7 @@ class DoTheThingLab3: UseCase<DoTheThingLab3.RequestValues, DoTheThingLab3.Respo
 
     class RequestValues(val pointListOriginal: List<PointMD>) : UseCase.RequestValues
 
-    class ResponseValue(val pointListRestored: List<PointMD>,
-                        val pointListCs: List<Point>) : UseCase.ResponseValue
+    class ResponseValue(val pointListOriginal: List<Point>,
+                        val pointListRestored: List<Point>,
+                        val cs: Array<Double> ) : UseCase.ResponseValue
 }

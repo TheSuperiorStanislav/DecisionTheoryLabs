@@ -1,6 +1,5 @@
 package com.study.thesuperiorstanislav.decisiontheorylabs.utils.math
 
-import com.study.thesuperiorstanislav.decisiontheorylabs.lab1.domain.model.Point
 import com.study.thesuperiorstanislav.decisiontheorylabs.lab3.domain.model.PointMD
 
 object RegressionMD {
@@ -9,23 +8,22 @@ object RegressionMD {
 
     private var pointListOriginal: List<PointMD> = arrayListOf()
     private var pointListRestored: MutableList<PointMD> = mutableListOf()
-    private var pointListCs: MutableList<Point> = mutableListOf()
 
-    fun doTheThing(pointListOriginal: List<PointMD>):Array<List<Any>>{
+    fun doTheThing(pointListOriginal: List<PointMD>):Array<Any>{
         RegressionMD.pointListOriginal = pointListOriginal
         pointListRestored.clear()
-        pointListCs.clear()
 
         val cs = findOptimal()
         calculateDotsModel(cs)
         return arrayOf(
                 pointListRestored,
-                pointListCs)
+                cs)
     }
 
     private fun calculateDotsModel(cs: Array<Double>) {
         pointListOriginal.forEach {
-            pointListRestored.add(PointMD(it.u, calculateRegression(cs, it.u)))
+            val uRestored = Array(it.u.size) { i -> it.u[i] + 0.5}
+            pointListRestored.add(PointMD(uRestored, calculateRegression(cs, uRestored)))
         }
     }
 
@@ -64,27 +62,33 @@ object RegressionMD {
     }
 
     private fun findOptimal(): Array<Double> {
-        val cs = Array(pointListOriginal.first().u.size) { _ -> 1.0 }
-        val csNew = Array(pointListOriginal.first().u.size) { _ -> 0.0 }
-        val grad = Array(pointListOriginal.first().u.size) { _ -> 0.0 }
-        val dirs = Array(pointListOriginal.first().u.size) { indexRow ->
-            Array(pointListOriginal.first().u.size) { indexColumn ->
+        val n = pointListOriginal.first().u.size
+
+        val cs = Array(n) { _ -> 2.0 }
+        val csNew = Array(n) { _ -> 0.0 }
+        val grad = Array(n) { _ -> 0.0 }
+        val dirs = Array(n) { indexRow ->
+            Array(n) { indexColumn ->
                 if (indexRow == indexColumn)
                     1.0
                 else
                     0.0
             }
         }
+
         var t = 1.0
         val tStatic = 1.0
-        val n = pointListOriginal.first().u.size
+
         val stillSearching = true
         var isPrevOk = false
-        var isStep9 = false
+        var isStep9: Boolean
+
         var step = 0
-        val limit = n
-        val e1 = 0.5
-        val e2 = 0.5
+        val limit = n * 4
+
+        val e1 = 0.2
+        val e2 = 0.2
+
         do {
             if (step >= limit)
                 return cs
@@ -156,16 +160,17 @@ object RegressionMD {
             val yCalculated = calculateRegression(cs, it.u)
             w += Math.pow(it.x - yCalculated, 2.0)
         }
-        return w
+        return w/pointListOriginal.size
     }
 
     private fun calculateWGrad(cs: Array<Double>,index :Int): Double {
         var w = 0.0
         pointListOriginal.forEach {pointMD ->
-            val yCalculated = calculateRegressionGrad(cs, index,pointMD.u)
-            w +=  2.0 * pointMD.x - yCalculated
+            val yCalculated = calculateRegression(cs,pointMD.u)
+            val yCalculatedGrad = calculateRegressionGrad(cs, index,pointMD.u)
+            w +=  2.0 * (pointMD.x - yCalculated) + yCalculatedGrad
         }
-        return w
+        return w/pointListOriginal.size
     }
 
     private fun calculateRegressionGrad(cs: Array<Double>, index:Int,u: Array<Double>): Double {

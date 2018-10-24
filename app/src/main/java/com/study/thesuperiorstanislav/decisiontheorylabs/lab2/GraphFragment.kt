@@ -67,29 +67,30 @@ class GraphFragment: Fragment(),GraphContract.View {
                 val dataPointRestored = DataPoint(pointListRestored[i].x, pointListRestored[i].y)
 
                 uiThread {
-                    graph_view.viewport.isScalable = false
-                    graph_view.viewport.isScrollable = false
-                    graph_view.viewport.isXAxisBoundsManual = true
-                    graph_view.viewport.isYAxisBoundsManual = true
-
-                    graph_view.viewport.setMinX(minMax[0])
-                    graph_view.viewport.setMaxX(minMax[1])
-
-                    graph_view.viewport.setMinY(minMax[2])
-                    graph_view.viewport.setMaxY(minMax[3])
-
-                    graph_view.removeAllSeries()
-                    graph_view.addSeries(dataForGraphRestored)
-                    graph_view.addSeries(dataForGraphOriginal)
-
                     if (it.isResumed) {
+                        graph_view.viewport.isScalable = false
+                        graph_view.viewport.isScrollable = false
+                        graph_view.viewport.isXAxisBoundsManual = true
+                        graph_view.viewport.isYAxisBoundsManual = true
+
+                        graph_view.viewport.setMinX(minMax[0])
+                        graph_view.viewport.setMaxX(minMax[1])
+
+                        graph_view.viewport.setMinY(minMax[2])
+                        graph_view.viewport.setMaxY(minMax[3])
+
+                        graph_view.removeAllSeries()
+                        graph_view.addSeries(dataForGraphRestored)
+                        graph_view.addSeries(dataForGraphOriginal)
+
+
                         try {
                             (graph_view.series[0] as LineGraphSeries<DataPoint>)
-                                    .appendData(dataPointRestored,false,pointListOriginal.size)
+                                    .appendData(dataPointRestored, false, pointListOriginal.size)
                             (graph_view.series[1] as PointsGraphSeries<DataPoint>)
-                                    .appendData(dataPointOriginal,false,pointListOriginal.size)
-                        }catch (e: Exception){
-                            Log.e("GraphView",e.localizedMessage)
+                                    .appendData(dataPointOriginal, false, pointListOriginal.size)
+                        } catch (e: Exception) {
+                            Log.e("GraphView", e.localizedMessage)
                         }
                     }
                 }
