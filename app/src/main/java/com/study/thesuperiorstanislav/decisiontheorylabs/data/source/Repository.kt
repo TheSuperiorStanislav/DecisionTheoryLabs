@@ -51,7 +51,7 @@ object Repository: DataSource {
         callback.onSaved()
     }
 
-    override fun getPointsLab5(callback: DataSource.LoadRegulatorReturnDataCallback) {
+    override fun getDataLab5(callback: DataSource.LoadRegulatorReturnDataCallback) {
         if (cachedRegulatorReturnData != null){
             callback.onRegulatorReturnDataLoaded(cachedRegulatorReturnData!!)
         }else{
