@@ -3,6 +3,7 @@ package com.study.thesuperiorstanislav.decisiontheorylabs.data.source
 import com.study.thesuperiorstanislav.decisiontheorylabs.UseCase
 import com.study.thesuperiorstanislav.decisiontheorylabs.lab1.domain.model.Point
 import com.study.thesuperiorstanislav.decisiontheorylabs.lab3.domain.model.PointMD
+import com.study.thesuperiorstanislav.decisiontheorylabs.utils.math.Regulator
 
 interface DataSource {
     interface LoadPointCallback {
@@ -31,6 +32,19 @@ interface DataSource {
 
     }
 
+    interface LoadRegulatorReturnDataCallback {
+
+        fun onRegulatorReturnDataLoaded(regulatorReturnData: Regulator.RegulatorReturnData)
+
+        fun onDataNotAvailable(error: UseCase.Error)
+    }
+
+    interface SaveRegulatorReturnDataCallback {
+
+        fun onSaved()
+
+    }
+
     fun getPointsLab1(callback: LoadPointCallback)
 
     fun cachePointsLab1(pointList: List<Point>, callback: SavePointCallback)
@@ -43,8 +57,8 @@ interface DataSource {
 
     fun cachePointsLab3(pointList: List<PointMD>, callback: SavePointMDCallback)
 
-    fun getPointsLab5(callback: LoadPointCallback)
+    fun getPointsLab5(callback: LoadRegulatorReturnDataCallback)
 
-    fun cachePointsLab5(pointList: List<Point>, callback: SavePointCallback)
+    fun cachePointsLab5(regulatorReturnData: Regulator.RegulatorReturnData, callback: SaveRegulatorReturnDataCallback)
 
 }
