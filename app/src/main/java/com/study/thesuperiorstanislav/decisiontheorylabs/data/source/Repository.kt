@@ -9,6 +9,7 @@ object Repository: DataSource {
     private var cachedPointsListLab1: List<Point>? = null
     private var cachedPointsListLab2: List<Point>? = null
     private var cachedPointsListLab3: List<PointMD>? = null
+    private var cachedPointsListLab5: List<Point>? = null
 
     override fun getPointsLab1(callback: DataSource.LoadPointCallback) {
         if (cachedPointsListLab1 != null){
@@ -46,6 +47,19 @@ object Repository: DataSource {
 
     override fun cachePointsLab3(pointList: List<PointMD>, callback: DataSource.SavePointMDCallback) {
         cachedPointsListLab3 = pointList
+        callback.onSaved()
+    }
+
+    override fun getPointsLab5(callback: DataSource.LoadPointCallback) {
+        if (cachedPointsListLab3 != null){
+            callback.onPointLoaded(cachedPointsListLab5!!)
+        }else{
+            callback.onDataNotAvailable(UseCase.Error(UseCase.Error.UNKNOWN_ERROR,""))
+        }
+    }
+
+    override fun cachePointsLab5(pointList: List<Point>, callback: DataSource.SavePointCallback) {
+        cachedPointsListLab5 = pointList
         callback.onSaved()
     }
 }

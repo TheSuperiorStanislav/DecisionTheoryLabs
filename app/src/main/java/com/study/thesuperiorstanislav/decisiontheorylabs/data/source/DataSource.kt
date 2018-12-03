@@ -43,4 +43,8 @@ interface DataSource {
 
     fun cachePointsLab3(pointList: List<PointMD>, callback: SavePointMDCallback)
 
+    fun getPointsLab5(callback: LoadPointCallback)
+
+    fun cachePointsLab5(pointList: List<Point>, callback: SavePointCallback)
+
 }
