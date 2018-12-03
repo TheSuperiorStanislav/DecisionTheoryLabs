@@ -59,7 +59,7 @@ object Repository: DataSource {
         }
     }
 
-    override fun cachePointsLab5(regulatorReturnData: Regulator.RegulatorReturnData, callback: DataSource.SaveRegulatorReturnDataCallback) {
+    override fun cacheDataLab5(regulatorReturnData: Regulator.RegulatorReturnData, callback: DataSource.SaveRegulatorReturnDataCallback) {
         cachedRegulatorReturnData = regulatorReturnData
         callback.onSaved()
     }

@@ -59,6 +59,6 @@ interface DataSource {
 
     fun getPointsLab5(callback: LoadRegulatorReturnDataCallback)
 
-    fun cachePointsLab5(regulatorReturnData: Regulator.RegulatorReturnData, callback: SaveRegulatorReturnDataCallback)
+    fun cacheDataLab5(regulatorReturnData: Regulator.RegulatorReturnData, callback: SaveRegulatorReturnDataCallback)
 
 }
