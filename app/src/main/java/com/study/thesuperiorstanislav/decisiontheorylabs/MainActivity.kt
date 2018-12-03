@@ -25,6 +25,10 @@ import com.study.thesuperiorstanislav.decisiontheorylabs.lab3.Lab3Presenter
 import com.study.thesuperiorstanislav.decisiontheorylabs.lab3.domain.usecase.CacheDataFromFileLab3
 import com.study.thesuperiorstanislav.decisiontheorylabs.lab3.domain.usecase.DoTheThingLab3
 import com.study.thesuperiorstanislav.decisiontheorylabs.lab3.domain.usecase.GetDataLab3
+import com.study.thesuperiorstanislav.decisiontheorylabs.lab5.Lab5Fragment
+import com.study.thesuperiorstanislav.decisiontheorylabs.lab5.Lab5Presenter
+import com.study.thesuperiorstanislav.decisiontheorylabs.lab5.domain.DoTheThingLab5
+import com.study.thesuperiorstanislav.decisiontheorylabs.lab5.domain.GetDataLab5
 import com.study.thesuperiorstanislav.decisiontheorylabs.lecture1.Lecture1Fragment
 import com.study.thesuperiorstanislav.decisiontheorylabs.lecture1.Lecture1Presenter
 import com.study.thesuperiorstanislav.decisiontheorylabs.lecture1.domain.usecase.CacheDataLecture1
@@ -132,8 +136,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     ft.commitAllowingStateLoss()
                 this.welcome_text.visibility = View.GONE
             }
-            R.id.nav_lab_4 -> {
-
+            R.id.nav_lab_5 -> {
+                val ft = supportFragmentManager.beginTransaction()
+                (fragment as Lab5Fragment).setPresenter(Lab5Presenter(fragment,
+                        DoTheThingLab5(Repository),
+                        GetDataLab5(Repository)))
+                ft.replace(R.id.content_frame, fragment)
+                if (!isFinishing)
+                    ft.commitAllowingStateLoss()
+                this.welcome_text.visibility = View.GONE
             }
             R.id.nav_lecture_1 -> {
                 val ft = supportFragmentManager.beginTransaction()
@@ -191,8 +202,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                     ft.commitAllowingStateLoss()
                 this.welcome_text.visibility = View.GONE
             }
-            R.id.nav_lab_4 -> {
-
+            R.id.nav_lab_5 -> {
+                val ft = supportFragmentManager.beginTransaction()
+                val fragment = Lab5Fragment()
+                fragment.setPresenter(Lab5Presenter(fragment,
+                        DoTheThingLab5(Repository),
+                        GetDataLab5(Repository)))
+                ft.replace(R.id.content_frame, fragment)
+                if (!isFinishing)
+                    ft.commitAllowingStateLoss()
+                this.welcome_text.visibility = View.GONE
             }
             R.id.nav_lecture_1 -> {
                 val ft = supportFragmentManager.beginTransaction()

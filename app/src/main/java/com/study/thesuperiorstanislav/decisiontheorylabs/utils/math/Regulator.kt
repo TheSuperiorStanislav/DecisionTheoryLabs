@@ -8,25 +8,48 @@ object Regulator {
         val staringDot = 0 - n / 2.0 * delta
         val pointListOriginal: List<Point> = calculatePointOriginal(n, staringDot, delta, function)
         val pointListRestored = List(n) { index ->
-            findModelPoint(staringDot, pointListOriginal[index].y, function, alpha)
+            findModelPoint(staringDot,
+                    pointListOriginal[index].x,
+                    pointListOriginal[index].y, function, alpha,delta)
         }
         return RegulatorReturnData(pointListOriginal,pointListRestored)
     }
 
-    private fun findModelPoint(staringDot: Double, x:Double, function: String, alpha: Double): Point {
+    private fun findModelPoint(staringDot: Double,u:Double, x:Double, function: String, alpha: Double, delta: Double): Point {
         var curU = staringDot
         var curX: Double
         var count = 0
-        do {
-            curX = Function.calculateFunc(curU, function)
-            curU += alpha * (x - curX)
-            curX = Function.calculateFunc(curU, function)
-            count++
-        }while (Math.abs(curX - x) > 0.00001
-                && curU != Double.NaN
-                && curU != Double.POSITIVE_INFINITY
-                && curU != Double.NEGATIVE_INFINITY
-                && count < 1000)
+            do {
+                curX = Function.calculateFunc(curU, function)
+                curU += alpha * (x - curX)
+                curX = Function.calculateFunc(curU, function)
+                count++
+            }while ((curX != x)
+                    && curU != Double.NaN
+                    && curU != Double.POSITIVE_INFINITY
+                    && curU != Double.NEGATIVE_INFINITY
+                    && count < 1000)
+
+
+        if (Math.abs(curX - x) > 0.1) {
+            curU = staringDot
+            count = 0
+            do {
+                curX = Function.calculateFunc(curU, function)
+                curU -= alpha * (x - curX)
+                curX = Function.calculateFunc(curU, function)
+                count++
+            } while ((curX != x)
+                    && curU != Double.NaN
+                    && curU != Double.POSITIVE_INFINITY
+                    && curU != Double.NEGATIVE_INFINITY
+                    && count < 1000)
+        }
+
+        if (curU == Double.NaN
+                || curU == Double.POSITIVE_INFINITY
+                || curU == Double.NEGATIVE_INFINITY)
+            return Point(0.0,0.0)
 
         return Point(curU,curX)
     }
